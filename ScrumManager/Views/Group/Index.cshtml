@@ -1,0 +1,15 @@
+﻿@model GroupVM
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>@Model.Data.Name</h2>
+        <br />
+        <hr/>
+        <br/>
+        <h4>Users</h4>
+        @foreach(var u in Model.Writers)
+        {
+            <span>@u.Value.FirstName + @u.Value.LastName</span>
+        }
+    </div>
+</div>

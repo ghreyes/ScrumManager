@@ -1,29 +1,42 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Models;
+using ScrumManager.Models;
 
-namespace WebApplication1.Controllers
+namespace ScrumManager.Controllers
 {
     public class HomeController : Controller
     {
         public async Task<IActionResult> Index()
         {
+            const string user_id = "u1";
+
             string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
 
             FirestoreDb db = FirestoreDb.Create("scrummanager");
-            CollectionReference usersRef = db.Collection("groups");
-            QuerySnapshot snapshot = await usersRef.GetSnapshotAsync();
-            foreach (DocumentSnapshot document in snapshot.Documents)
+            var userSnapshot = await db.Collection("users").Document(user_id).GetSnapshotAsync();
+            var homeVM = new HomeVM(userSnapshot.ConvertTo<User>());
+
+            foreach(var group in homeVM.Groups)
             {
-                Console.WriteLine("User: {0}", document.Id);
-                Dictionary<string, object> documentDictionary = document.ToDictionary();
-                Console.WriteLine();
+                var groupSnapshot = await db.Collection("groups").Document(group.ID).GetSnapshotAsync();
+                var groupData = groupSnapshot.ConvertTo<Group>();
+                group.TotalWriters = groupData.Writers.Count;
+
+                var logSnapshot = await db.Collection("logs")
+                    .WhereEqualTo("GroupID", group.ID)
+                    .WhereLessThan("Date", DateTime.Today.AddDays(1).ToUniversalTime())
+                    .GetSnapshotAsync();
+                //.WhereGreaterThanOrEqualTo("Date", DateTime.Today)
+                var logData = logSnapshot.Documents.Select(x => x.ConvertTo<Log>()).ToList();
+                group.TotalLogsCompelete = logData.Count;
+                group.IsLogComplete = logData.Any(x => x.UserID == user_id);
             }
 
             return View();

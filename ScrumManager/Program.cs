@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Google.Cloud.Firestore;
 
-namespace WebApplication1
+namespace ScrumManager
 {
     public class Program
     {
