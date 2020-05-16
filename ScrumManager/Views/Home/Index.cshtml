@@ -1,19 +1,36 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model HomeVM
 
-<div class="card text-center">
-    <div class="card-body row">
-        <div class="col-lg-8">
-            <h3>Group Name Here</h3>
-        </div>
-        <div class="col-lg-4">
-            <div class="row">
-                <i class="fas fa-anchor"/>
+@foreach(var group in Model.Groups)
+{
+    <div class="card text-center group_card">
+        <div class="card-body row">
+            <div class="group_card_header">
+                <h3>@group.Name</h3>
             </div>
-            <div class="row">
-                <span>5/7 Complete</span>
+            <div>
+                <div class="group_card_icon_container" style="height:50%">
+                    @if (group.Roles.Contains("Manager"))
+                    {
+                        <i class="fas fa-user-cog" data-toggle="tooltip" data-placement="top" title="Group Admin"></i>
+                    }
+                    @if (group.Roles.Contains("Writer"))
+                    {
+                        <i class="fas fa-pencil-alt" data-toggle="tooltip" data-placement="top" title="Contributor"></i>
+                    }
+                    @if (group.Roles.Contains("Viewer"))
+                    {
+                        <i class="fas fa-eye" data-toggle="tooltip" data-placement="top" title="View Only"></i>
+                    }
+                    </div>
+                <div style="height:50%">
+                    <span style="vertical-align:middle">@group.TotalLogsCompelete/@group.TotalWriters Complete</span>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+
+

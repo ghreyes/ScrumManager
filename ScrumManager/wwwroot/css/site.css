@@ -57,3 +57,28 @@ body {
     line-height: 60px; /* Vertically center the text there */
     background-color: #f5f5f5;
 }
+
+.group_card{
+    height: 100px;
+}
+
+.group_card > div {
+    display: flex;
+    padding: 1.25rem 3rem;
+}
+
+.group_card_header {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.group_card_icon_container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.group_card_icon_container i {
+    padding-left: 15px;
+}

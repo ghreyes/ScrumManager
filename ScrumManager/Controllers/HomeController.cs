@@ -39,7 +39,7 @@ namespace ScrumManager.Controllers
                 group.IsLogComplete = logData.Any(x => x.UserID == user_id);
             }
 
-            return View();
+            return View(homeVM);
         }
 
         public IActionResult About()
