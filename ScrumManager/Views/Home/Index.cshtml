@@ -3,9 +3,20 @@
 }
 @model HomeVM
 
+<div style="flex-direction:row; display:flex; justify-content:space-between">
+    <span style="font-size:2.5rem">Groups</span>
+    <button class="btn cs_primary"data-toggle="modal" data-target="#addGroupModal" style="align-self:center" >
+        <i class="fas fa-plus"></i>
+        Group
+    </button>
+</div>
+
+<hr/>
+
 @foreach(var group in Model.Groups)
 {
-    <div class="card text-center group_card cs_primary">
+    <a class="no_underline" href="#">
+    <div class="card text-center group_card cs_secondary">
         <div class="card-body row">
             <div class="group_card_header">
                 <h3>@group.Name</h3>
@@ -31,6 +42,7 @@
             </div>
         </div>
     </div>
+    </a>
 }
 
-
+<partial name="/Views/Group/_AddGroupModal.cshtml" />

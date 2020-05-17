@@ -1,22 +1,28 @@
 ﻿/* Color Scheme */
-.cs_primary {
-    background: #98c1d9;
-    color: #000000;
-}
-
-.cs_secondary, .cs_secondary a, .cs_secondary .dropdown-menu{
+.cs_primary, .cs_primary a, a.cs_primary, .cs_primary .dropdown-menu {
     background: #293241;
     color: #EE6C4D;
+    font-weight:bold;
 }
 
-.cs_secondary a:hover{
+.cs_primary a:hover, a.cs_primary:hover {
     background: #293241;
     color: #FF8C6D;
 }
 
+.btn.cs_primary:hover {
+    background: #091221;
+    color: #EE6C4D;
+}
+
+.cs_secondary {
+    background: #98c1d9;
+    color: #000000;
+}
+
 .cs_tertiary {
     background: #e0fbfc;
-    color: #FDFDFF;
+    color: #000000;
 }
 
 
@@ -80,6 +86,10 @@ body {
     display:flex;
     justify-content:flex-end;
     padding: 0 1rem;
+}
+
+a.no_underline, a.no_underline:hover{
+    text-decoration: none;
 }
 
 .group_card{
