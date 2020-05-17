@@ -1,4 +1,26 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+﻿/* Color Scheme */
+.cs_primary {
+    background: #98c1d9;
+    color: #000000;
+}
+
+.cs_secondary, .cs_secondary a, .cs_secondary .dropdown-menu{
+    background: #293241;
+    color: #EE6C4D;
+}
+
+.cs_secondary a:hover{
+    background: #293241;
+    color: #FF8C6D;
+}
+
+.cs_tertiary {
+    background: #e0fbfc;
+    color: #FDFDFF;
+}
+
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 body {
     padding-top: 50px;
@@ -55,7 +77,9 @@ body {
     /* Set the fixed height of the footer here */
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
-    background-color: #f5f5f5;
+    display:flex;
+    justify-content:flex-end;
+    padding: 0 1rem;
 }
 
 .group_card{
@@ -80,5 +104,5 @@ body {
 }
 
 .group_card_icon_container i {
-    padding-left: 15px;
+    margin-left: 15px;
 }
