@@ -7,11 +7,22 @@ using System.Threading.Tasks;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
 using ScrumManager.Models;
+using ScrumManager.Services;
 
 namespace ScrumManager.Controllers
 {
+
+    [Route("[controller]")]
     public class HomeController : Controller
     {
+        GroupService _groupService;
+
+        public HomeController()
+        {
+            _groupService = new GroupService();
+        }
+
+        [HttpGet("[action]")]
         public async Task<IActionResult> Index()
         {
             const string user_id = "u1";
@@ -21,8 +32,9 @@ namespace ScrumManager.Controllers
 
             FirestoreDb db = FirestoreDb.Create("scrummanager");
             var userSnapshot = await db.Collection("users").Document(user_id).GetSnapshotAsync();
-            var homeVM = new HomeVM(userSnapshot.ConvertTo<User>());
+            var user = userSnapshot.ConvertTo<User>();
 
+            var homeVM = new HomeVM(user);
             foreach(var group in homeVM.Groups)
             {
                 var groupSnapshot = await db.Collection("groups").Document(group.ID).GetSnapshotAsync();
@@ -39,7 +51,36 @@ namespace ScrumManager.Controllers
                 group.IsLogComplete = logData.Any(x => x.UserID == user_id);
             }
 
+            ViewBag.AddGroupModel = new Group { Managers = new Dictionary<string, UserData> { { user.DocId, user.Data } } };
+
             return View(homeVM);
+        }
+
+        [HttpPost("CreateGroup")]
+        public async Task<IActionResult> CreateGroup(Group group)
+        {
+            var f = Request.Form;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _groupService.Create(group);
+                if (result)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return Error();
+                }
+            }
+            catch(Exception ex)
+            {
+                return Error();
+            }
         }
 
         public IActionResult About()

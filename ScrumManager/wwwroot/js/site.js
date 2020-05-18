@@ -7,3 +7,15 @@
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+$('.post-ajax').on('submit', function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: e.currentTarget.action,
+        data: $(this).serialize(),
+        success: function () {
+            alert('success');
+        }
+    });
+});

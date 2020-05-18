@@ -1,27 +1,42 @@
-﻿<div class="modal fade" id="addGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+﻿@model Group
+
+<div class="modal fade" id="addGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <h5 class="modal-title" id="exampleModalLabel">New Group</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                @using (Html.BeginForm("CreateGroup", "Home", FormMethod.Post, new { id = "CreateGroupForm", @class = "post-ajax" }))
+                {
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="group-name" class="col-form-label">Group Name:</label>
+                        <input asp-for="Data.Name" class="form-control">
+                        <span asp-validation-for="Data.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <label for="manager-text" class="col-form-label">Managers:</label>
+                        <input class="form-control" id="manager-text" />
+                        @*@Html.HiddenFor(m => m.Managers)*@
+                        @foreach (var manager in Model.Managers)
+                        {
+                            <span>
+                                @manager.Value.FirstName @manager.Value.LastName (You)
+                                @*<input hidden name="Managers[]" value="@manager.Key" />*@
+                                <input hidden name="Managers[@manager.Key][FirstName]" value="@manager.Value.FirstName" />
+                                <input hidden name="Managers[@manager.Key][LastName]" value="@manager.Value.LastName" />
+                            </span>
+                        }
                     </div>
-                </form>
+                }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <button type="submit" class="btn btn-primary" form="CreateGroupForm">Submit</button>
             </div>
         </div>
     </div>

@@ -57,7 +57,7 @@
 
     <footer class="footer cs_primary">
         @*<div class="container">*@
-            <span>&copy; 2020 - ScrumManager</span>
+        <span>&copy; 2020 - ScrumManager</span>
         @*</div>*@
     </footer>
 
@@ -68,7 +68,7 @@
             <script src="~/js/site.js" asp-append-version="true"></script>
         </environment>
         <environment exclude="Development">*@
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
             asp-fallback-test="window.jQuery"
             crossorigin="anonymous">
@@ -86,6 +86,8 @@
     <script src="https://kit.fontawesome.com/f86197b478.js" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @*</environment>*@
+
+    <partial name="/Views/Shared/_ValidationScriptsPartial.cshtml"/>
 
     @RenderSection("Scripts", required: false)
 </body>
