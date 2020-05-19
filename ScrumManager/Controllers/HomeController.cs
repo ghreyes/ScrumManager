@@ -67,15 +67,8 @@ namespace ScrumManager.Controllers
 
             try
             {
-                var result = await _groupService.Create(group);
-                if (result)
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return Error();
-                }
+                await _groupService.Create(group);
+                return Ok();
             }
             catch(Exception ex)
             {
