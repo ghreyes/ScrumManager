@@ -1,8 +1,5 @@
 ﻿using Google.Cloud.Firestore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ScrumManager.Models
 {
@@ -13,19 +10,29 @@ namespace ScrumManager.Models
         public string DocId { get; set; }
 
         [FirestoreProperty]
-        public UserData Data { get; set; }
+        public string FirstName { get; set; }
+
+        [FirestoreProperty]
+        public string LastName { get; set; }
 
         [FirestoreProperty]
         public Dictionary<string, UserGroupPermissions> Groups { get; set; }
     }
 
+    /// <summary>
+    /// For keeping track of user roles in a group
+    /// </summary>
     [FirestoreData]
-    public class UserData
+    public class Group_UserData
     {
         [FirestoreProperty]
         public string FirstName { get; set; }
 
         [FirestoreProperty]
         public string LastName { get; set; }
+
+        [FirestoreProperty]
+        public string[] Roles { get; set; }
+
     }
 }

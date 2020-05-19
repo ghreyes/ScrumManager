@@ -1,11 +1,8 @@
 ﻿using Google.Cloud.Firestore;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
 
 namespace ScrumManager.Models
 {
@@ -15,9 +12,7 @@ namespace ScrumManager.Models
         public Group()
         {
             Data = new GroupData();
-            Managers = new Dictionary<string, UserData>();
-            Writers = new Dictionary<string, UserData>();
-            Viewers = new Dictionary<string, UserData>();
+            Users = new Dictionary<string, Group_UserData>();
         }
 
         [FirestoreDocumentId]
@@ -28,13 +23,11 @@ namespace ScrumManager.Models
 
         [FirestoreProperty]
         [MinLength(1)]
-        public Dictionary<string, UserData> Managers{ get; set; }
+        public Dictionary<string, Group_UserData> Users{ get; set; }
 
-        [FirestoreProperty]
-        public Dictionary<string, UserData> Writers { get; set; }
-
-        [FirestoreProperty]
-        public Dictionary<string, UserData> Viewers { get; set; }
+        public Dictionary<string, Group_UserData> Managers => Users.Where(x => x.Value.Roles.Contains("Manager")).ToDictionary(x => x.Key, x => x.Value);
+        public Dictionary<string, Group_UserData> Writers => Users.Where(x => x.Value.Roles.Contains("Writer")).ToDictionary(x => x.Key, x => x.Value);
+        public Dictionary<string, Group_UserData> Viewers => Users.Where(x => x.Value.Roles.Contains("Viewer")).ToDictionary(x => x.Key, x => x.Value);
     }
 
     [FirestoreData]

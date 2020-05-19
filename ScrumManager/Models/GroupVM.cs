@@ -14,8 +14,7 @@ namespace ScrumManager.Models
         {
             DocId = g.DocId;
             Data = g.Data;
-            Managers = g.Managers;
-            Writers = g.Writers;
+            Users = g.Users;
             Logs = new Dictionary<string, string>();
         }
 
@@ -23,9 +22,7 @@ namespace ScrumManager.Models
 
         public GroupData Data { get; set; }
 
-        public Dictionary<string, UserData> Managers { get; set; }
-
-        public Dictionary<string, UserData> Writers { get; set; }
+        public Dictionary<string, Group_UserData> Users { get; set; }
 
         public Dictionary<string,string> Logs { get; set; }
     }

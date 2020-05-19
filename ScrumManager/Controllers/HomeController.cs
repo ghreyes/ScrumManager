@@ -35,7 +35,7 @@ namespace ScrumManager.Controllers
             var user = userSnapshot.ConvertTo<User>();
 
             var homeVM = new HomeVM(user);
-            foreach(var group in homeVM.Groups)
+            foreach (var group in homeVM.Groups)
             {
                 var groupSnapshot = await db.Collection("groups").Document(group.ID).GetSnapshotAsync();
                 var groupData = groupSnapshot.ConvertTo<Group>();
@@ -51,7 +51,18 @@ namespace ScrumManager.Controllers
                 group.IsLogComplete = logData.Any(x => x.UserID == user_id);
             }
 
-            ViewBag.AddGroupModel = new Group { Managers = new Dictionary<string, UserData> { { user.DocId, user.Data } } };
+            ViewBag.AddGroupModel = new Group
+            {
+                Users = new Dictionary<string, Group_UserData> {
+                    {
+                        user.DocId, new Group_UserData {
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            Roles = new string[]{"Manager"}
+                        }
+                    }
+                }
+            };
 
             return View(homeVM);
         }

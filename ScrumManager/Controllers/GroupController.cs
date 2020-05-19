@@ -25,8 +25,9 @@ namespace ScrumManager.Controllers
 
             var groupVM = new GroupVM(group);
 
-            foreach(var u in groupVM.Writers)
+            foreach(var u in groupVM.Users)
             {
+                if (!u.Value.Roles.Contains("Writer")) continue;
                 var logData = await db.Collection("logs").WhereEqualTo("UserID", u.Key).GetSnapshotAsync(); //NEEDS DATE FILTER
                 var log = logData.First().ConvertTo<Log>();
                 groupVM.Logs.Add(log.DocId, log.Content);
