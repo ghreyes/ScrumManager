@@ -116,3 +116,11 @@ a.no_underline, a.no_underline:hover{
 .group_card_icon_container i {
     margin-left: 15px;
 }
+
+#toast-container>div.toast{
+    opacity: 1;
+}
+
+#toast-container.toast-top-center{
+    top: 150px;
+}

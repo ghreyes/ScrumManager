@@ -8,14 +8,38 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 
+// Toastr setup
+toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "3000",
+    "hideDuration": "3000",
+    "timeOut": "3000",
+    "extendedTimeOut": "3000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+
 $('.post-ajax').on('submit', function (e) {
     e.preventDefault();
+    if (!$(this).valid()) return;
     $.ajax({
         type: "POST",
         url: e.currentTarget.action,
         data: $(this).serialize(),
         success: function () {
-            alert('success');
+            toastr.success('Success');
+            $('.modal').modal('hide');
+        },
+        error: function () {
+            toastr.warning("Something went wrong. Try again.");
         }
     });
 });

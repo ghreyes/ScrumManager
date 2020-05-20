@@ -21,14 +21,13 @@
                     <div class="form-group">
                         <label for="manager-text" class="col-form-label">Managers:</label>
                         <input class="form-control" id="manager-text" />
-                        @*@Html.HiddenFor(m => m.Managers)*@
                         @foreach (var manager in Model.Managers)
                         {
                             <span>
                                 @manager.Value.FirstName @manager.Value.LastName (You)
-                                @*<input hidden name="Managers[]" value="@manager.Key" />*@
-                                <input hidden name="Managers[@manager.Key][FirstName]" value="@manager.Value.FirstName" />
-                                <input hidden name="Managers[@manager.Key][LastName]" value="@manager.Value.LastName" />
+                                <input hidden name="Users[@manager.Key][FirstName]" value="@manager.Value.FirstName" />
+                                <input hidden name="Users[@manager.Key][LastName]" value="@manager.Value.LastName" />
+                                <input hidden name="Users[@manager.Key][Roles]" value="Manager" />
                             </span>
                         }
                     </div>

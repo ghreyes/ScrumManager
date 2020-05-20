@@ -33,6 +33,5 @@ namespace ScrumManager.Models
 
         [FirestoreProperty]
         public string[] Roles { get; set; }
-
     }
 }
