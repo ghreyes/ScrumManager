@@ -23,5 +23,8 @@ namespace ScrumManager.Models
 
         [FirestoreProperty]
         public string UserID { get; set; }
+
+        [FirestoreProperty]
+        public string UserName { get; set; }
     }
 }

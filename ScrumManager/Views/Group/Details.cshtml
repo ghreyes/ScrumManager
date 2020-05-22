@@ -1,0 +1,47 @@
+﻿@model GroupVM
+
+<div style="flex-direction:row; display:flex; justify-content:space-between">
+    <span class="page-header">@Model.Data.Name</span>
+    <button class="btn cs_primary" data-toggle="modal" data-target="#" style="align-self:center">
+        Users
+    </button>
+</div>
+
+<hr />
+
+<div id="dateContainer" style="display:flex; flex-direction:row; justify-content:center">
+    <button class="btn cs_primary dateChange" data-datechange="-">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <div style="margin: 0 20px; display:flex; flex-direction:column">
+        <span id="dateText" style="align-self:center; font-size:1.5rem">@DateTime.Today.ToShortDateString()</span>
+        <span id="dayText" style="align-self:center; font-size: 1rem">@DateTime.Today.DayOfWeek</span>
+    </div>
+    <button class="btn cs_primary dateChange" data-datechange="+">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <br />
+        <h4>Users</h4>
+        @foreach (var u in Model.Users)
+        {
+            <span>@u.Value.FirstName @u.Value.LastName</span>
+        }
+    </div>
+</div>
+
+<h4>Logs</h4>
+@foreach (var log in Model.Logs)
+{
+    <div class="row">
+        <div class="col-md-3">
+            <span>@log.Value.UserName</span>
+        </div>
+        <div class="col-md-9">
+            <span>@log.Value.Content</span>
+        </div>
+    </div>
+}

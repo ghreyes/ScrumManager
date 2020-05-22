@@ -26,7 +26,7 @@
     <Content Update="Properties\launchSettings.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\Group\Index.cshtml">
+    <Content Update="Views\Group\Details.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Home\About.cshtml">

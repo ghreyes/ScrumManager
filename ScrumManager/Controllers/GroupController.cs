@@ -9,10 +9,11 @@ using ScrumManager.Models;
 
 namespace ScrumManager.Controllers
 {
+    [Route("[controller]")]
     public class GroupController : Controller
     {
-        [Route("/group/index/{id}")] //https://localhost:44347/group/index/testGroup
-        public async Task<IActionResult> Index(string id)
+        [Route("{id}")]
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null) return View();
 
@@ -30,7 +31,7 @@ namespace ScrumManager.Controllers
                 if (!u.Value.Roles.Contains("Writer")) continue;
                 var logData = await db.Collection("logs").WhereEqualTo("UserID", u.Key).GetSnapshotAsync(); //NEEDS DATE FILTER
                 var log = logData.First().ConvertTo<Log>();
-                groupVM.Logs.Add(log.DocId, log.Content);
+                groupVM.Logs.Add(log.DocId, log);
             }
 
             return View(groupVM);

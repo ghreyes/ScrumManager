@@ -43,3 +43,18 @@ $('.post-ajax').on('submit', function (e) {
         }
     });
 });
+
+const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+$('.dateChange').on('click', function (e) {
+    const change = this.dataset.datechange;
+    if (!change) return;
+
+    var currDate = new Date($('#dateText').text());
+    change === '+' ?
+        currDate.setDate(currDate.getDate() + 1) :
+        currDate.setDate(currDate.getDate() - 1)
+
+    $('#dateText').text(currDate.toLocaleDateString());
+    $('#dayText').text(daysOfTheWeek[currDate.getDay()]);
+});
