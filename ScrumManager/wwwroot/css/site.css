@@ -134,3 +134,7 @@ a.no_underline, a.no_underline:hover{
     height: 40px;
     align-self:center;
 }
+
+textarea.form-control{
+    color:black;
+}

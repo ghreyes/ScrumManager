@@ -13,7 +13,13 @@ namespace ScrumManager.Models
         public string DocId { get; set; }
 
         [FirestoreProperty]
-        public string Content { get; set; }
+        public string Yesterday { get; set; }
+
+        [FirestoreProperty]
+        public string Today { get; set; }
+
+        [FirestoreProperty]
+        public string Blockers { get; set; }
 
         [FirestoreProperty]
         public Timestamp Date { get; set; }

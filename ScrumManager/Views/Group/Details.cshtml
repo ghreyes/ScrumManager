@@ -34,6 +34,55 @@
 </div>
 
 <h4>Logs</h4>
+@* This user's log *@
+<div class="row">
+    <div class="col-md-3">
+        <span>You (Insert this user's name)</span>
+    </div>
+    <div class="col-md-9">
+        @using (Html.BeginForm("UpdateLog", "Log", FormMethod.Post, new { id = "UpdateLogForm", @class = "post-ajax" }))
+        {
+            @{ var thisUserLog = Model.Logs.FirstOrDefault(x => x.Value.UserID == "u1"); }
+            @if (thisUserLog.Value != null)
+            {
+                <div class="form-group">
+                    <label for="yesterdayTA">Yesterday:</label>
+                    <textarea id="yesterdayTA" class="form-control" rows="3">@thisUserLog.Value.Yesterday</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="todayTA">Today:</label>
+                    <textarea id="todayTA" class="form-control" rows="3">@thisUserLog.Value.Today</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="blockersTA">Blockers:</label>
+                    <textarea id="blockersTA" class="form-control" rows="3">@thisUserLog.Value.Blockers</textarea>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label for="yesterdayTA">Yesterday:</label>
+                    <textarea id="yesterdayTA" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="todayTA">Today:</label>
+                    <textarea id="todayTA" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="blockersTA">Blockers:</label>
+                    <textarea id="blockersTA" class="form-control" rows="3"></textarea>
+                </div>
+            }
+
+            <div style="float:right">
+                <button class="btn cs_primary">Cancel</button>
+                <button type="submit" class="btn cs_primary">Update</button>
+            </div>
+        }
+    </div>
+</div>
+
+@* Other users' logs *@
 @foreach (var log in Model.Logs)
 {
     <div class="row">
@@ -41,7 +90,11 @@
             <span>@log.Value.UserName</span>
         </div>
         <div class="col-md-9">
-            <span>@log.Value.Content</span>
+            <span>Yesterday: @log.Value.Yesterday</span>
+            <br />
+            <span>Today: @log.Value.Today</span>
+            <br />
+            <span>Blockers: @log.Value.Blockers</span>
         </div>
     </div>
 }
