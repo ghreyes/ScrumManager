@@ -42,21 +42,26 @@
     <div class="col-md-9">
         @using (Html.BeginForm("UpdateLog", "Log", FormMethod.Post, new { id = "UpdateLogForm", @class = "post-ajax" }))
         {
-            @{ var thisUserLog = Model.Logs.FirstOrDefault(x => x.Value.UserID == "u1"); }
+            var thisUserLog = Model.Logs.FirstOrDefault(x => x.Value.UserID == "u1");
             @if (thisUserLog.Value != null)
             {
                 <div class="form-group">
                     <label for="yesterdayTA">Yesterday:</label>
-                    <textarea id="yesterdayTA" class="form-control" rows="3">@thisUserLog.Value.Yesterday</textarea>
+                    <textarea id="yesterdayTA" name="Yesterday" class="form-control" rows="3">@thisUserLog.Value.Yesterday</textarea>
                 </div>
                 <div class="form-group">
                     <label for="todayTA">Today:</label>
-                    <textarea id="todayTA" class="form-control" rows="3">@thisUserLog.Value.Today</textarea>
+                    <textarea id="todayTA" name="Today" class="form-control" rows="3">@thisUserLog.Value.Today</textarea>
                 </div>
                 <div class="form-group">
                     <label for="blockersTA">Blockers:</label>
-                    <textarea id="blockersTA" class="form-control" rows="3">@thisUserLog.Value.Blockers</textarea>
+                    <textarea id="blockersTA" name="Blockers" class="form-control" rows="3">@thisUserLog.Value.Blockers</textarea>
                 </div>
+                <input hidden name="DocId" value="@thisUserLog.Value.DocId" />
+                <input hidden name="Date" value="@thisUserLog.Value.Date" />
+                <input hidden name="GroupID" value="@thisUserLog.Value.GroupID" />
+                <input hidden name="UserID" value="@thisUserLog.Value.UserID" />
+                <input hidden name="UserName" value="@thisUserLog.Value.UserName" />
             }
             else
             {
