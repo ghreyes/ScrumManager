@@ -14,9 +14,10 @@ namespace ScrumManager.Services
 
             FirestoreDb db = FirestoreDb.Create("scrummanager");
             WriteBatch batch = db.StartBatch();
-            var logDoc = db.Collection("logs").Document(log.DocId);
-            //batch.Create(logDoc, log);
 
+            var logDoc = log.DocId == null ? 
+                db.Collection("logs").Document() : 
+                db.Collection("logs").Document(log.DocId);
             batch.Set(logDoc, log);
 
             var batchResult = await batch.CommitAsync();

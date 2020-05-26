@@ -29,9 +29,18 @@ namespace ScrumManager.Controllers
             foreach(var u in groupVM.Users)
             {
                 if (!u.Value.Roles.Contains("Writer")) continue;
-                var logData = await db.Collection("logs").WhereEqualTo("UserID", u.Key).GetSnapshotAsync(); //NEEDS DATE FILTER
-                var log = logData.First().ConvertTo<Log>();
-                groupVM.Logs.Add(log.DocId, log);
+                var logData = await db.Collection("logs")
+                    .WhereEqualTo("UserID", u.Key)
+                    .WhereGreaterThanOrEqualTo("Date", DateTime.Now.ToUniversalTime().Date)
+                    .WhereLessThan("Date", DateTime.Now.AddDays(1).ToUniversalTime().Date)
+                    .GetSnapshotAsync(); //NEEDS DATE FILTER
+                var logDoc = logData.FirstOrDefault();
+
+                if (logDoc != null)
+                {
+                    var log = logDoc.ConvertTo<Log>();
+                    groupVM.Logs.Add(log.DocId, log);
+                }
             }
 
             return View(groupVM);

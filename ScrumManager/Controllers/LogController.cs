@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Google.Cloud.Firestore;
+using Microsoft.AspNetCore.Mvc;
 using ScrumManager.Models;
 using ScrumManager.Services;
 using System;
@@ -23,6 +24,14 @@ namespace ScrumManager.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest();
+            }
+
+            // New Log
+            if(log.DocId == null)
+            {
+                log.Date = Timestamp.FromDateTime(DateTime.Parse(Request.Form["FormDate"].ToString()).ToUniversalTime().Date);
+                log.UserID = UserManager.GetUserID();
+                log.UserName = UserManager.GetUserName();
             }
 
             try
