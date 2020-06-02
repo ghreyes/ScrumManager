@@ -1,5 +1,9 @@
 ﻿@model GroupVM
 
+@section Scripts{
+    <script src="~/js/logListener.js"></script>
+}
+
 <div style="flex-direction:row; display:flex; justify-content:space-between">
     <span class="page-header">@Model.Data.Name</span>
     <button class="btn cs_primary" data-toggle="modal" data-target="#" style="align-self:center">
@@ -89,19 +93,38 @@
     </div>
 </div>
 
-@* Other users' logs *@
-@foreach (var log in Model.Logs)
-{
-    <div class="row">
-        <div class="col-md-3">
-            <span>@log.Value.UserName</span>
-        </div>
-        <div class="col-md-9">
-            <span>Yesterday: @log.Value.Yesterday</span>
-            <br />
-            <span>Today: @log.Value.Today</span>
-            <br />
-            <span>Blockers: @log.Value.Blockers</span>
-        </div>
+@* Template for new logs *@
+<div class="row" id="log-copy-row" hidden>
+    <div class="col-md-3">
+        <span class="log-username">Name</span>
     </div>
-}
+    <div class="col-md-9">
+        <span>Yesterday: </span>
+        <span class="log-yesterday">Yesterday</span>
+        <br />
+        <span>Today: </span>
+        <span class="log-today">Today</span>
+        <br />
+        <span>Blockers: </span>
+        <span class="log-blockers">Blockers</span>
+    </div>
+</div>
+
+@* Other users' logs *@
+<div id="logs-container">
+    @foreach (var log in Model.Logs)
+    {
+        <div class="row">
+            <div class="col-md-3">
+                <span>@log.Value.UserName</span>
+            </div>
+            <div class="col-md-9">
+                <span>Yesterday: @log.Value.Yesterday</span>
+                <br />
+                <span>Today: @log.Value.Today</span>
+                <br />
+                <span>Blockers: @log.Value.Blockers</span>
+            </div>
+        </div>
+    }
+</div>

@@ -59,4 +59,6 @@ $('.dateChange').on('click', function (e) {
     $('#dayText').text(daysOfTheWeek[currDate.getDay()]);
     var inputs = $('input[name="FormDate"]');
     inputs.val(currDate.toLocaleDateString());
+
+    ChangeListener(currDate);
 });
