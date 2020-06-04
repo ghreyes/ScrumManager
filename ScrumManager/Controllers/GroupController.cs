@@ -80,15 +80,16 @@ namespace ScrumManager.Controllers
                 }
             });
 
+            groupVM.UserID = UserManager.GetUserID();
+
             return View(groupVM);
         }
 
-        [Route("ChangeListener/{groupToJoin}")]
+        [HttpGet("ChangeListener/{groupToJoin}")]
         public async Task<IActionResult> ChangeListener(string groupToJoin)
         {
             try
             {
-                var x = Request;
                 if(_listener != null) await _listener.StopAsync();
                 var provider = new DateTimeFormatInfo();
                 provider.LongDatePattern = "yyyyMMdd";
@@ -121,7 +122,7 @@ namespace ScrumManager.Controllers
                 });
 
                 var qs = await query.GetSnapshotAsync();
-                return Json(qs.Documents);
+                return Json(qs.Documents.Select(x => x.ConvertTo<Log>()));
             }
             catch(Exception ex)
             {

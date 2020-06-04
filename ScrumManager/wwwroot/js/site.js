@@ -47,6 +47,7 @@ $('.post-ajax').on('submit', function (e) {
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 $('.dateChange').on('click', function (e) {
+    if(!VerifyInputDiffs()) return;
     const change = this.dataset.datechange;
     if (!change) return;
 
@@ -62,3 +63,23 @@ $('.dateChange').on('click', function (e) {
 
     ChangeListener(currDate);
 });
+
+function VerifyInputDiffs() {
+    // check if textareas are different than their data-revert values
+    // if diff, send confirmation 
+    // if same, return ok
+    if (!$('.check-value').data() || !$('.check-value').data('revert')) return true;
+
+    var ret = true;
+    $('.check-value').each(function (x) {
+        if ($(this).data('revert') != $(this).val()) {
+            if (confirm('Are you sure you want to discard your changes?'))
+                return;
+            else {
+                ret = false;
+                return;
+            }
+        }
+    });
+    return ret;
+}

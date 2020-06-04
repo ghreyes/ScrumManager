@@ -25,5 +25,7 @@ namespace ScrumManager.Models
         public Dictionary<string, Group_UserData> Users { get; set; }
 
         public Dictionary<string, Log> Logs { get; set; }
+
+        public string UserID { get; set; }
     }
 }

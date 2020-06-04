@@ -11,6 +11,8 @@
     </button>
 </div>
 
+<input hidden id="userID" value="@Model.UserID" />
+
 <hr />
 
 <div id="dateContainer" style="display:flex; flex-direction:row; justify-content:center">
@@ -51,15 +53,15 @@
             {
                 <div class="form-group">
                     <label for="yesterdayTA">Yesterday:</label>
-                    <textarea id="yesterdayTA" name="Yesterday" class="form-control" rows="3">@thisUserLog.Value.Yesterday</textarea>
+                    <textarea id="yesterdayTA" name="Yesterday" class="form-control check-value" rows="3" data-revert="@thisUserLog.Value.Yesterday">@thisUserLog.Value.Yesterday</textarea>
                 </div>
                 <div class="form-group">
                     <label for="todayTA">Today:</label>
-                    <textarea id="todayTA" name="Today" class="form-control" rows="3">@thisUserLog.Value.Today</textarea>
+                    <textarea id="todayTA" name="Today" class="form-control check-value" rows="3" data-revert="@thisUserLog.Value.Today">@thisUserLog.Value.Today</textarea>
                 </div>
                 <div class="form-group">
                     <label for="blockersTA">Blockers:</label>
-                    <textarea id="blockersTA" name="Blockers" class="form-control" rows="3">@thisUserLog.Value.Blockers</textarea>
+                    <textarea id="blockersTA" name="Blockers" class="form-control check-value" rows="3" data-revert="@thisUserLog.Value.Blockers">@thisUserLog.Value.Blockers</textarea>
                 </div>
                 <input hidden name="DocId" value="@thisUserLog.Value.DocId" />
                 <input hidden name="Date" value="@thisUserLog.Value.Date" />
@@ -71,22 +73,22 @@
             {
                 <div class="form-group">
                     <label for="yesterdayTA">Yesterday:</label>
-                    <textarea id="yesterdayTA" name="Yesterday" class="form-control" rows="3"></textarea>
+                    <textarea id="yesterdayTA" name="Yesterday" class="form-control check-value" rows="3"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="todayTA">Today:</label>
-                    <textarea id="todayTA" name="Today" class="form-control" rows="3"></textarea>
+                    <textarea id="todayTA" name="Today" class="form-control check-value" rows="3"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="blockersTA">Blockers:</label>
-                    <textarea id="blockersTA" name="Blockers" class="form-control" rows="3"></textarea>
+                    <textarea id="blockersTA" name="Blockers" class="form-control check-value" rows="3"></textarea>
                 </div>
                 <input hidden name="FormDate" value="@DateTime.Now.Date" />
                 <input hidden name="GroupID" value="@Model.DocId" />
             }
 
             <div style="float:right">
-                <button class="btn cs_primary">Cancel</button>
+                <button type="reset" class="btn cs_primary">Cancel</button>
                 <button type="submit" class="btn cs_primary">Update</button>
             </div>
         }

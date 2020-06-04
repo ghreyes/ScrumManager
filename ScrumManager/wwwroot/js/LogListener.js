@@ -59,13 +59,31 @@ function ChangeListener(date) {
     var groupID = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
     currGroup = groupID + '_' + FormatDate(date);
 
+    var userID = $('#userID').val();
+
     $('#logs-container').empty();
     $.ajax({
         type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
         url: "/Group/ChangeListener/" + currGroup,
         success: function (data) {
-            console.log(data);
-            data.forEach(log => AddNewLog(log));
+            $('#yesterdayTA').val('').data('revert', '');
+            $('#todayTA').val('').data('revert', '');
+            $('#blockersTA').val('').data('revert', '');
+
+            data.forEach((log)=> {
+                if (log.userID != userID)
+                    AddNewLog(log);
+                else {
+                    $('#yesterdayTA').val(log.yesterday).data('revert', log.yesterday);
+                    $('#todayTA').val(log.today).data('revert', log.today);
+                    $('#blockersTA').val(log.blockers).data('revert', log.blockers);
+                }
+            }); 
+        },
+        error: function () {
+            console.log("error changing listener");
         }
     });
 
