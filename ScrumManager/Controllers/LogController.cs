@@ -36,8 +36,8 @@ namespace ScrumManager.Controllers
 
             try
             {
-                await _logService.CreateOrUpdate(log);
-                return Ok();
+                return Json(await _logService.CreateOrUpdate(log));
+                //return Ok();
             }
             catch (Exception ex)
             {

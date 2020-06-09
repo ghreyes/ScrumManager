@@ -81,6 +81,32 @@
     <script src="https://kit.fontawesome.com/f86197b478.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCISiKtDsStMOvBZW-OFzNfrVQVdcuqG2k",
+            authDomain: "scrummanager.firebaseapp.com",
+            databaseURL: "https://scrummanager.firebaseio.com",
+            projectId: "scrummanager",
+            storageBucket: "scrummanager.appspot.com",
+            messagingSenderId: "13953325053",
+            appId: "1:13953325053:web:d0abde7db90baa80662b94",
+            measurementId: "G-8TBTNKLDYJ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @*</environment>*@
 

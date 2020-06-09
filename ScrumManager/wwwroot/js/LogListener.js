@@ -62,6 +62,12 @@ function ChangeListener(date) {
     var userID = $('#userID').val();
 
     $('#logs-container').empty();
+    $('#variableFormDetails').empty();
+     if ($('input[name="FormDate"]').length == 0)
+        $('#variableFormDetails').append('<input hidden name="FormDate" />')
+    var inputs = $('input[name="FormDate"]');
+    inputs.val(date.toLocaleDateString());
+
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -76,9 +82,17 @@ function ChangeListener(date) {
                 if (log.userID != userID)
                     AddNewLog(log);
                 else {
-                    $('#yesterdayTA').val(log.yesterday).data('revert', log.yesterday);
-                    $('#todayTA').val(log.today).data('revert', log.today);
-                    $('#blockersTA').val(log.blockers).data('revert', log.blockers);
+                    $('#yesterdayTA').val(log.yesterday);
+                    $('#todayTA').val(log.today);
+                    $('#blockersTA').val(log.blockers);
+                    $('#yesterdayTA').data('revert', log.yesterday);
+                    $('#todayTA').data('revert', log.today);
+                    $('#blockersTA').data('revert', log.blockers);
+
+                    $('#variableFormDetails').append('<input hidden name="DocId" value="' + log.docId + '" />')
+                    //$('#variableFormDetails').append('<input hidden name="Date" value="' + log.date_datetime + '" />')
+                    $('#variableFormDetails').append('<input hidden name="UserName" value="' + log.userName + '" />')
+                    $('#variableFormDetails').append('<input hidden name="UserID" value="' + log.userID + '" />')
                 }
             }); 
         },

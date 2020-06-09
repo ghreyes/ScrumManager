@@ -44,6 +44,34 @@ $('.post-ajax').on('submit', function (e) {
     });
 });
 
+$('#UpdateLogForm').on('submit', function (e) {
+    e.preventDefault();
+    if (!$(this).valid()) return;
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        //contentType: "application/json; charset=utf-8",
+        url: e.currentTarget.action,
+        data: $(this).serialize(),
+        success: function (log) {
+            toastr.success('Success');
+            $('#yesterdayTA').data('revert', log.yesterday);
+            $('#todayTA').data('revert', log.today);
+            $('#blockersTA').data('revert', log.blockers);
+
+            $('#variableFormDetails').empty();
+            $('#variableFormDetails').append('<input hidden name="DocId" value="' + log.docId + '" />')
+            //$('#variableFormDetails').append('<input hidden name="Date" value="' + log.date_datetime + '" />')
+            $('#variableFormDetails').append('<input hidden name="UserName" value="' + log.userName + '" />')
+            $('#variableFormDetails').append('<input hidden name="UserID" value="' + log.userID + '" />')
+
+        },
+        error: function () {
+            toastr.warning("Something went wrong. Try again.");
+        }
+    });
+});
+
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 $('.dateChange').on('click', function (e) {
@@ -58,10 +86,13 @@ $('.dateChange').on('click', function (e) {
 
     $('#dateText').text(currDate.toLocaleDateString());
     $('#dayText').text(daysOfTheWeek[currDate.getDay()]);
-    var inputs = $('input[name="FormDate"]');
-    inputs.val(currDate.toLocaleDateString());
 
     ChangeListener(currDate);
+
+    //if ($('input[name="FormDate"]').length == 0)
+    //    $('#variableFormDetails').append('<input hidden name="FormDate" />')
+    //var inputs = $('input[name="FormDate"]');
+    //inputs.val(currDate.toLocaleDateString());
 });
 
 function VerifyInputDiffs() {
@@ -72,7 +103,7 @@ function VerifyInputDiffs() {
 
     var ret = true;
     $('.check-value').each(function (x) {
-        if ($(this).data('revert') != $(this).val()) {
+        if ($(this).data('revert') != $(this).val() && $(this).data('revert') != '') {
             if (confirm('Are you sure you want to discard your changes?'))
                 return;
             else {

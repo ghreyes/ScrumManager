@@ -46,7 +46,7 @@
         <span>You (Insert this user's name)</span>
     </div>
     <div class="col-md-9">
-        @using (Html.BeginForm("UpdateLog", "Log", FormMethod.Post, new { id = "UpdateLogForm", @class = "post-ajax" }))
+        @using (Html.BeginForm("UpdateLog", "Log", FormMethod.Post, new { id = "UpdateLogForm"}))
         {
             var thisUserLog = Model.Logs.FirstOrDefault(x => x.Value.UserID == "u1");
             @if (thisUserLog.Value != null)
@@ -63,11 +63,13 @@
                     <label for="blockersTA">Blockers:</label>
                     <textarea id="blockersTA" name="Blockers" class="form-control check-value" rows="3" data-revert="@thisUserLog.Value.Blockers">@thisUserLog.Value.Blockers</textarea>
                 </div>
-                <input hidden name="DocId" value="@thisUserLog.Value.DocId" />
-                <input hidden name="Date" value="@thisUserLog.Value.Date" />
+                <div id="variableFormDetails">
+                    <input hidden name="DocId" value="@thisUserLog.Value.DocId" />
+                    <input hidden name="Date" value="@thisUserLog.Value.Date" />
+                    <input hidden name="UserID" value="@thisUserLog.Value.UserID" />
+                    <input hidden name="UserName" value="@thisUserLog.Value.UserName" />
+                </div>
                 <input hidden name="GroupID" value="@thisUserLog.Value.GroupID" />
-                <input hidden name="UserID" value="@thisUserLog.Value.UserID" />
-                <input hidden name="UserName" value="@thisUserLog.Value.UserName" />
             }
             else
             {
@@ -83,10 +85,11 @@
                     <label for="blockersTA">Blockers:</label>
                     <textarea id="blockersTA" name="Blockers" class="form-control check-value" rows="3"></textarea>
                 </div>
-                <input hidden name="FormDate" value="@DateTime.Now.Date" />
+                <div id="variableFormDetails">
+                    <input hidden name="FormDate" value="@DateTime.Now.Date" />
+                </div>
                 <input hidden name="GroupID" value="@Model.DocId" />
             }
-
             <div style="float:right">
                 <button type="reset" class="btn cs_primary">Cancel</button>
                 <button type="submit" class="btn cs_primary">Update</button>
