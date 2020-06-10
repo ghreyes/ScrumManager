@@ -1,0 +1,3 @@
+﻿# Minimal app.yaml 
+runtime: aspnetcore
+env: flex
