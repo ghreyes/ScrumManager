@@ -50,7 +50,6 @@ $('#UpdateLogForm').on('submit', function (e) {
     $.ajax({
         type: "POST",
         dataType: "json",
-        //contentType: "application/json; charset=utf-8",
         url: e.currentTarget.action,
         data: $(this).serialize(),
         success: function (log) {

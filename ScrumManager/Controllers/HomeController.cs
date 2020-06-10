@@ -43,9 +43,9 @@ namespace ScrumManager.Controllers
 
                 var logSnapshot = await db.Collection("logs")
                     .WhereEqualTo("GroupID", group.ID)
-                    .WhereLessThan("Date", DateTime.Today.AddDays(1).ToUniversalTime())
+                    .WhereGreaterThanOrEqualTo("Date", DateTime.Now.ToUniversalTime().Date)
+                    .WhereLessThan("Date", DateTime.Now.AddDays(1).ToUniversalTime().Date)
                     .GetSnapshotAsync();
-                //.WhereGreaterThanOrEqualTo("Date", DateTime.Today)
                 var logData = logSnapshot.Documents.Select(x => x.ConvertTo<Log>()).ToList();
                 group.TotalLogsCompelete = logData.Count;
                 group.IsLogComplete = logData.Any(x => x.UserID == user_id);
