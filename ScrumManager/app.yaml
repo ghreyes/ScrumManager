@@ -1,1 +1,2 @@
 ﻿runtime: aspnetcore
+env: flex
