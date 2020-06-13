@@ -7,9 +7,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
 WORKDIR /src
-COPY ["ScrumManager/ScrumManager.csproj", "ScrumManager/"]
+COPY ["ScrumManager.csproj", "ScrumManager/"]
 RUN dotnet restore "ScrumManager/ScrumManager.csproj"
-COPY . .
+COPY . ./ScrumManager/
 WORKDIR "/src/ScrumManager"
 RUN dotnet build "ScrumManager.csproj" -c Release -o /app/build
 
