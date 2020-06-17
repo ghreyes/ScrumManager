@@ -1,0 +1,50 @@
+﻿@model RegisterVM
+
+@section Scripts{
+    <script src="~/js/RegisterUser.js"></script>
+}
+
+<div style="flex-direction:row; display:flex; justify-content:space-between">
+    <span class="page-header">Sign Up</span>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { id = "RegisterForm" }))
+        {
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" asp-for="Email"></label>
+                <input class="col-md-9 form-control" asp-for="Email" />
+                <span asp-validation-for="Email" class="text-danger register-validation"></span>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" asp-for="Password"></label>
+                <input class="col-md-9 form-control" asp-for="Password" />
+                <span asp-validation-for="Password" class="text-danger register-validation"></span>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" asp-for="FirstName"></label>
+                <input class="col-md-9 form-control" asp-for="FirstName" />
+                <span asp-validation-for="FirstName" class="text-danger register-validation"></span>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" asp-for="LastName"></label>
+                <input class="col-md-9 form-control" asp-for="LastName" />
+                <span asp-validation-for="LastName" class="text-danger register-validation"></span>
+            </div>
+
+            <div style="flex-direction:row; display:flex; justify-content:space-between">
+                <span>
+                    Already have an account?
+                    <a href="/SignIn">Click here</a> to log in.
+                </span>
+                <button class="btn cs_primary" type="submit">Sign Up</button>
+            </div>
+        }
+    </div>
+</div>

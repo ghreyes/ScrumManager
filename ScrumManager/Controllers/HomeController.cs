@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using Google.Cloud.Firestore;
+using Microsoft.AspNetCore.Mvc;
+using ScrumManager.Models;
+using ScrumManager.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Google.Cloud.Firestore;
-using Microsoft.AspNetCore.Mvc;
-using ScrumManager.Models;
-using ScrumManager.Services;
 
 namespace ScrumManager.Controllers
 {
@@ -85,6 +84,12 @@ namespace ScrumManager.Controllers
             {
                 return Error();
             }
+        }
+
+        [HttpGet("[action]")]
+        public IActionResult Register()
+        {
+            return View();
         }
 
         public IActionResult About()
