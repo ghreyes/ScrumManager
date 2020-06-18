@@ -10,10 +10,10 @@ namespace ScrumManager.Models
         public string DocId { get; set; }
 
         [FirestoreProperty]
-        public string FirstName { get; set; }
+        public string DisplayName { get; set; }
 
         [FirestoreProperty]
-        public string LastName { get; set; }
+        public string Email { get; set; }
 
         [FirestoreProperty]
         public Dictionary<string, UserGroupPermissions> Groups { get; set; }
@@ -26,10 +26,7 @@ namespace ScrumManager.Models
     public class Group_UserData
     {
         [FirestoreProperty]
-        public string FirstName { get; set; }
-
-        [FirestoreProperty]
-        public string LastName { get; set; }
+        public string DisplayName { get; set; }
 
         [FirestoreProperty]
         public string[] Roles { get; set; }

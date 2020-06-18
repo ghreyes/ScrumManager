@@ -4,35 +4,39 @@
 
     var email = $('#RegisterForm [name="Email"]').val();
     var password = $('#RegisterForm [name="Password"]').val();
+    var fName = $('#RegisterForm [name="FirstName"]').val();
+    var lName = $('#RegisterForm [name="LastName"]').val();
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(function (result) {
+        .then(function (result) {
+            var user = firebase.auth().currentUser;
 
-    })
-    .catch(function (error) {
-        toastr.error(error.message);
-    });
+            user.updateProfile({
+                displayName: fName + ' ' + lName
+            });
+        }).then(function () {
+            toastr.success('user created');
+            // Firestore user created using Firebase cloud function
+            // PUT REDIRECT HERE
 
-    //$.ajax({
-    //    type: "POST",
-    //    dataType: "json",
-    //    url: e.currentTarget.action,
-    //    data: $(this).serialize(),
-    //    success: function (log) {
-    //        toastr.success('Success');
-    //        $('#yesterdayTA').data('revert', log.yesterday);
-    //        $('#todayTA').data('revert', log.today);
-    //        $('#blockersTA').data('revert', log.blockers);
+            //var userUID = result.user.uid;
 
-    //        $('#variableFormDetails').empty();
-    //        $('#variableFormDetails').append('<input hidden name="DocId" value="' + log.docId + '" />')
-    //        //$('#variableFormDetails').append('<input hidden name="Date" value="' + log.date_datetime + '" />')
-    //        $('#variableFormDetails').append('<input hidden name="UserName" value="' + log.userName + '" />')
-    //        $('#variableFormDetails').append('<input hidden name="UserID" value="' + log.userID + '" />')
+            $.ajax({
+                type: "POST",
+                url: "/RegisterUser",
+                data: {
+                    'DocId': firebase.auth().currentUser.uid,
+                    'DisplayName': fName + ' ' + lName,
+                    'Email': email
+                },
+                success: function (user) {
 
-    //    },
-    //    error: function () {
-    //        toastr.warning("Something went wrong. Try again.");
-    //    }
-    //});
+                },
+                error: function (error) {
+                    toastr.error(error.message);
+                }
+            });
+        }).catch(function (error) {
+            toastr.error(error.message);
+        });
 });

@@ -24,9 +24,8 @@
                         @foreach (var manager in Model.Managers)
                         {
                             <span>
-                                @manager.Value.FirstName @manager.Value.LastName (You)
-                                <input hidden name="Users[@manager.Key][FirstName]" value="@manager.Value.FirstName" />
-                                <input hidden name="Users[@manager.Key][LastName]" value="@manager.Value.LastName" />
+                                @manager.Value.DisplayName (You)
+                                <input hidden name="Users[@manager.Key][DisplayName]" value="@manager.Value.DisplayName" />
                                 <input hidden name="Users[@manager.Key][Roles]" value="Manager" />
                             </span>
                         }

@@ -11,17 +11,18 @@ using System.Threading.Tasks;
 namespace ScrumManager.Controllers
 {
 
-    [Route("[controller]")]
     public class HomeController : Controller
     {
         GroupService _groupService;
+        UserService _userService;
 
         public HomeController()
         {
             _groupService = new GroupService();
+            _userService = new UserService();
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("Home")]
         public async Task<IActionResult> Index()
         {
             const string user_id = "u1";
@@ -55,8 +56,7 @@ namespace ScrumManager.Controllers
                 Users = new Dictionary<string, Group_UserData> {
                     {
                         user.DocId, new Group_UserData {
-                            FirstName = user.FirstName,
-                            LastName = user.LastName,
+                            DisplayName = user.DisplayName,
                             Roles = new string[]{"Manager"}
                         }
                     }
@@ -66,7 +66,7 @@ namespace ScrumManager.Controllers
             return View(homeVM);
         }
 
-        [HttpPost("CreateGroup")]
+        [HttpPost("Home/CreateGroup")]
         public async Task<IActionResult> CreateGroup(Group group)
         {
             var f = Request.Form;
@@ -90,6 +90,23 @@ namespace ScrumManager.Controllers
         public IActionResult Register()
         {
             return View();
+        }
+
+        [HttpPost("RegisterUser")]
+        public async Task<IActionResult> RegisterUser(User user)
+        {
+            var form = Request.Form;
+
+            try
+            {
+                //var user = new User() { DocId = form["uid"], DisplayName = form["displayName"] };
+                await _userService.Update(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Error();
+            }
         }
 
         public IActionResult About()

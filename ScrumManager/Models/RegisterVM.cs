@@ -1,6 +1,4 @@
-﻿using Google.Cloud.Firestore;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ScrumManager.Models
 {
@@ -13,7 +11,7 @@ namespace ScrumManager.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [MinLength(6)]
+        [MinLength(6, ErrorMessage="Password must be at least 6 characters")]
         public string Password { get; set; }
 
         [Required]
