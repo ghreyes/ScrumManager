@@ -92,6 +92,12 @@ namespace ScrumManager.Controllers
             return View();
         }
 
+        [HttpGet("[action]")]
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+
         [HttpPost("RegisterUser")]
         public async Task<IActionResult> RegisterUser(User user)
         {
@@ -99,7 +105,6 @@ namespace ScrumManager.Controllers
 
             try
             {
-                //var user = new User() { DocId = form["uid"], DisplayName = form["displayName"] };
                 await _userService.Update(user);
                 return Ok();
             }

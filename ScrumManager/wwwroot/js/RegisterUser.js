@@ -15,12 +15,6 @@
                 displayName: fName + ' ' + lName
             });
         }).then(function () {
-            toastr.success('user created');
-            // Firestore user created using Firebase cloud function
-            // PUT REDIRECT HERE
-
-            //var userUID = result.user.uid;
-
             $.ajax({
                 type: "POST",
                 url: "/RegisterUser",
@@ -36,6 +30,8 @@
                     toastr.error(error.message);
                 }
             });
+
+            window.location.href = "/Home";
         }).catch(function (error) {
             toastr.error(error.message);
         });
