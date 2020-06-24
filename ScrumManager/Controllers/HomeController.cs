@@ -1,4 +1,10 @@
-﻿using Google.Cloud.Firestore;
+﻿using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Firestore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ScrumManager.Models;
 using ScrumManager.Services;
@@ -6,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ScrumManager.Controllers
@@ -22,6 +29,7 @@ namespace ScrumManager.Controllers
             _userService = new UserService();
         }
 
+        [Authorize]
         [HttpGet("Home")]
         public async Task<IActionResult> Index()
         {
@@ -82,6 +90,7 @@ namespace ScrumManager.Controllers
             }
             catch(Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 return Error();
             }
         }
@@ -110,6 +119,35 @@ namespace ScrumManager.Controllers
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
+                return Error();
+            }
+        }
+
+        [HttpPost("SignInUser")]
+        public async Task<IActionResult> SignInUser()
+        {
+            var form = Request.Form;
+
+            try
+            {
+                if(FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance == null)
+                {
+                    string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
+                    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
+                    var app = FirebaseApp.Create(new AppOptions() { Credential = GoogleCredential.GetApplicationDefault() });
+                }
+
+                var verifiedToken = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(form["Token"]);
+                var identity = new ClaimsIdentity(verifiedToken.ToClaims(), JwtBearerDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                return Json(new { redirect = Url.Action("Index") });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
                 return Error();
             }
         }

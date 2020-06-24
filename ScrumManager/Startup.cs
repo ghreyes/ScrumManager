@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using ScrumManager.Hubs;
 
 namespace ScrumManager
@@ -33,6 +36,27 @@ namespace ScrumManager
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services
+            .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.AccessDeniedPath = "/Register";
+                options.LoginPath = "/LogIn";
+                options.ReturnUrlParameter = "";
+                options.Cookie.Name = "Auth";
+            });
+            //.AddJwtBearer(options =>
+            //{
+            //    options.Authority = "https://securetoken.google.com/scrummanager";
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidIssuer = "https://securetoken.google.com/scrummanager",
+            //        ValidateAudience = true,
+            //        ValidAudience = "scrummanager",
+            //        ValidateLifetime = true
+            //    };
+            //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR();
@@ -61,6 +85,9 @@ namespace ScrumManager
             {
                 routes.MapHub<LogHub>("/logHub");
             });
+
+            app.UseAuthentication();
+            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {

@@ -126,6 +126,7 @@ namespace ScrumManager.Controllers
             }
             catch(Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 return StatusCode(500);
             }
         }

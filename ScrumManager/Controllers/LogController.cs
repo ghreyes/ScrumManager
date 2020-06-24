@@ -4,6 +4,7 @@ using ScrumManager.Models;
 using ScrumManager.Services;
 using System;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ScrumManager.Controllers
 {
@@ -41,6 +42,7 @@ namespace ScrumManager.Controllers
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 return StatusCode(500);
             }
         }
