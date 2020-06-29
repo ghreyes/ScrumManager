@@ -17,7 +17,7 @@
                         data: {
                             'Token': token
                         },
-                        success: function (data) {
+                        success: function (data) {gmail
                             window.location.replace(data.redirect);
                         },
                         error: function (error) {
@@ -44,4 +44,21 @@
             }
             $('#SignInForm [type="submit"]').prop('disabled', false);
         });
+});
+
+$('#GoogleSignIn').click(function () {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.addscope('profile');
+    provider.addscope('email');
+
+    firebase.auth().signInWithPopup(provider).then(function (result) {
+        var token = result.credential.accessToken;
+        var user = result.user;
+    }).catch(function (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+        toastr.error(error.message);
+    });
 });
