@@ -20,13 +20,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            @if (User.Identity.IsAuthenticated)
+            {
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Groups</a>
+                        <a class="nav-link" href="/Home">Groups</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Reports</a>
+                        <a class="nav-link" href="/Reports">Reports</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -34,13 +36,14 @@
                         <a class="nav-link" href="#">Help</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-item nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name</a>
+                        <a class="nav-item nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.GetUserName()</a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Sign Out</a>
+                            <a id="SignOut" class="dropdown-item" href="/SignOut">Sign Out</a>
                         </div>
                     </li>
                 </ul>
             </div>
+            }
         </nav>
     </header>
 

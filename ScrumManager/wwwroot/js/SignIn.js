@@ -17,7 +17,7 @@
                         data: {
                             'Token': token
                         },
-                        success: function (data) {gmail
+                        success: function (data) {
                             window.location.replace(data.redirect);
                         },
                         error: function (error) {

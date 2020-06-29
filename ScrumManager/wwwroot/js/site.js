@@ -113,3 +113,7 @@ function VerifyInputDiffs() {
     });
     return ret;
 }
+
+$('#SignOut').on('click', function (e) {
+    firebase.auth().signOut();
+});

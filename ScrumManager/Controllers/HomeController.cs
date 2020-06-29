@@ -107,6 +107,20 @@ namespace ScrumManager.Controllers
             return View();
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> SignOut()
+        {
+            try
+            {
+                await HttpContext.SignOutAsync();
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            return RedirectToAction("SignIn");
+        }
+
         [HttpPost("RegisterUser")]
         public async Task<IActionResult> RegisterUser(User user)
         {

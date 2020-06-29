@@ -31,8 +31,8 @@ namespace ScrumManager.Controllers
             if(log.DocId == null)
             {
                 log.Date = Timestamp.FromDateTime(DateTime.Parse(Request.Form["FormDate"].ToString()).ToUniversalTime().Date);
-                log.UserID = UserManager.GetUserID();
-                log.UserName = UserManager.GetUserName();
+                log.UserID = User.GetUserID();
+                log.UserName = User.GetUserName();
             }
 
             try

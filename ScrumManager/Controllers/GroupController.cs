@@ -80,7 +80,7 @@ namespace ScrumManager.Controllers
                 }
             });
 
-            groupVM.UserID = UserManager.GetUserID();
+            groupVM.UserID = User.GetUserID();
 
             return View(groupVM);
         }

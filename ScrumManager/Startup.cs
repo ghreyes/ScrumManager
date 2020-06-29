@@ -41,8 +41,7 @@ namespace ScrumManager
             .AddCookie(options =>
             {
                 options.AccessDeniedPath = "/Register";
-                options.LoginPath = "/LogIn";
-                options.ReturnUrlParameter = "";
+                options.LoginPath = "/SignIn";
                 options.Cookie.Name = "Auth";
             });
             //.AddJwtBearer(options =>
