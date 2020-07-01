@@ -33,7 +33,7 @@ namespace ScrumManager.Controllers
         [HttpGet("Home")]
         public async Task<IActionResult> Index()
         {
-            const string user_id = "u1";
+            var user_id = User.GetUserID();
 
             string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);

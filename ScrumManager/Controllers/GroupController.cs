@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using ScrumManager.Hubs;
 using ScrumManager.Models;
+using ScrumManager.Services;
 
 namespace ScrumManager.Controllers
 {
@@ -17,16 +18,24 @@ namespace ScrumManager.Controllers
     {
         private readonly LogHub _logHub;
         private FirestoreChangeListener _listener;
+        private UserService _userService;
 
         public GroupController(LogHub logHub)
         {
             _logHub = logHub;
+            _userService = new UserService();
         }
 
         [Route("{id}")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null) return View();
+
+            if (!await _userService.IsUserInGroup(User.GetUserID(), id))
+            {
+                ViewData["URL"] = Request.Host.ToString() + Request.Path;
+                return View("Unauthorized");
+            }
 
             string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);

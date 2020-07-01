@@ -76,6 +76,8 @@ namespace ScrumManager
                 app.UseHsts();
             }
 
+            app.UseStatusCodePagesWithReExecute("/StatusCode","?code={0}");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

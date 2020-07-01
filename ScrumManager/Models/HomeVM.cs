@@ -16,15 +16,18 @@ namespace ScrumManager.Models
         public HomeVM(User u)
         {
             Groups = new List<HomeGroupDetails>();
-            
-            foreach(var g in u.Groups)
+
+            if (u.Groups != null)
             {
-                Groups.Add(new HomeGroupDetails()
+                foreach (var g in u.Groups)
                 {
-                    ID = g.Key,
-                    Name = g.Value.Name,
-                    Roles = g.Value.Roles
-                });
+                    Groups.Add(new HomeGroupDetails()
+                    {
+                        ID = g.Key,
+                        Name = g.Value.Name,
+                        Roles = g.Value.Roles
+                    });
+                }
             }
         }
 

@@ -1,0 +1,17 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Unauthorized";
+}
+
+<h1>Unauthorized.</h1>
+<h2>You do not have access to this document.</h2>
+<hr />
+
+
+@if (ViewData["URL"] != null)
+{
+    <h3>Attempted URL</h3>
+    <p>
+        @ViewData["URL"]
+    </p>
+}

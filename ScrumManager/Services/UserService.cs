@@ -26,5 +26,22 @@ namespace ScrumManager.Services
 
             return (await userDoc.GetSnapshotAsync()).ConvertTo<User>();
         }
+
+        public async Task<bool> IsUserInGroup(string UserID, string GroupID)
+        {
+            string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
+
+            FirestoreDb db = FirestoreDb.Create("scrummanager");
+            var data = await db.Collection("groups").Document(GroupID).GetSnapshotAsync();
+            var group = data.ConvertTo<Group>();
+
+            return IsUserInGroup(UserID, group);
+        }
+
+        public bool IsUserInGroup(string UserID, Group group)
+        {
+            return group.Users.ContainsKey(UserID);
+        }
     }
 }
