@@ -164,6 +164,7 @@ $('.CreateGroupForm_AddButton').on('click', function (e) {
                 newRow.find('.nameText').text(data.displayName);
                 newRow.find('.roles').val(role).attr('name', 'Users[' + uid + '][Roles]');
                 newRow.find('.displayName').val(uid).attr('name', 'Users[' + data.displayName + '][DisplayName]');
+                newRow.find('.emailIcon').remove();
                 removeBtn.data('id', uid);
             }
             else {
@@ -171,6 +172,7 @@ $('.CreateGroupForm_AddButton').on('click', function (e) {
                 newRow.find('.nameText').text(email);
                 newRow.find('.roles').val(role).attr('name', 'Invites[' + email + '][Roles]');
                 newRow.find('.displayName').val(email).attr('name', 'Invites[' + email + '][DisplayName]');
+                newRow.find('.emailIcon').tooltip();
                 removeBtn.data('id', email);
             }
 
