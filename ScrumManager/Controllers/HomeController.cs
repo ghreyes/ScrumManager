@@ -74,27 +74,6 @@ namespace ScrumManager.Controllers
             return View(homeVM);
         }
 
-        [HttpPost("Home/CreateGroup")]
-        public async Task<IActionResult> CreateGroup(Group group)
-        {
-            var f = Request.Form;
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                await _groupService.Create(group);
-                return Ok();
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                return Error();
-            }
-        }
-
         [HttpGet("[action]")]
         public IActionResult Register()
         {

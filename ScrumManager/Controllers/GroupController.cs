@@ -19,11 +19,14 @@ namespace ScrumManager.Controllers
         private readonly LogHub _logHub;
         private FirestoreChangeListener _listener;
         private UserService _userService;
+        private GroupService _groupService;
+
 
         public GroupController(LogHub logHub)
         {
             _logHub = logHub;
             _userService = new UserService();
+            _groupService = new GroupService();
         }
 
         [Route("{id}")]
@@ -134,6 +137,27 @@ namespace ScrumManager.Controllers
                 return Json(qs.Documents.Select(x => x.ConvertTo<Log>()));
             }
             catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(Group group)
+        {
+            var f = Request.Form;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _groupService.Create(group);
+                return Ok();
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 return StatusCode(500);

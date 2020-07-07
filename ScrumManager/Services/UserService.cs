@@ -43,5 +43,17 @@ namespace ScrumManager.Services
         {
             return group.Users.ContainsKey(UserID);
         }
+
+        public async Task<User> GetUserIdByEmail(string email)
+        {
+            string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
+
+            FirestoreDb db = FirestoreDb.Create("scrummanager");
+            var data = await db.Collection("users").WhereEqualTo("Email", email).GetSnapshotAsync();
+
+            if (data.Documents.Count == 0) return new User();
+            else return data.Documents[0].ConvertTo<User>();;
+        }
     }
 }

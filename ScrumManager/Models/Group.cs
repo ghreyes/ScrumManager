@@ -23,7 +23,10 @@ namespace ScrumManager.Models
 
         [FirestoreProperty]
         [MinLength(1)]
-        public Dictionary<string, Group_UserData> Users{ get; set; }
+        public Dictionary<string, Group_UserData> Users { get; set; }
+
+        [FirestoreProperty]
+        public Dictionary<string, Group_UserData> Invites { get; set; }
 
         public Dictionary<string, Group_UserData> Managers => Users.Where(x => x.Value.Roles.Contains("Manager")).ToDictionary(x => x.Key, x => x.Value);
         public Dictionary<string, Group_UserData> Writers => Users.Where(x => x.Value.Roles.Contains("Writer")).ToDictionary(x => x.Key, x => x.Value);

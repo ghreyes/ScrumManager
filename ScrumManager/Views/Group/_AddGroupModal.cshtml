@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("CreateGroup", "Home", FormMethod.Post, new { id = "CreateGroupForm", @class = "post-ajax" }))
+                @using (Html.BeginForm("Create", "Group", FormMethod.Post, new { id = "CreateGroupForm", @class = "post-ajax" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
@@ -20,21 +20,39 @@
                     </div>
                     <div class="form-group">
                         <label for="manager-text" class="col-form-label">Managers:</label>
-                        <input class="form-control" id="manager-text" />
-                        @foreach (var manager in Model.Managers)
-                        {
-                            <span>
-                                @manager.Value.DisplayName (You)
-                                <input hidden name="Users[@manager.Key][DisplayName]" value="@manager.Value.DisplayName" />
-                                <input hidden name="Users[@manager.Key][Roles]" value="Manager" />
-                            </span>
-                        }
+                        <div style="display:flex">
+                            <input class="form-control col-md-10" id="manager-text" />
+                            <button class="btn cs_primary col-md-2 CreateGroupForm_AddButton" type="button" 
+                                    data-datacontainer="ManagersContainer" data-message="Manager already added" data-textfield="manager-text" data-role="Manager">Add</button>
+                        </div>
+                        <div id="ManagersContainer">
+                            @foreach (var manager in Model.Managers)
+                            {
+                                <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@manager.Key">
+                                    <span style="flex-grow:1">@manager.Value.DisplayName (You)</span>                                        
+                                    <input hidden name="Users[@manager.Key][DisplayName]" value="@manager.Value.DisplayName" />
+                                    <input hidden name="Users[@manager.Key][Roles]" value="Manager" />
+
+                                </div>
+                            }
+                        </div>
+
+                        @*Template*@
+                        <div id="userTemplate" style="flex-direction: row; display: flex; justify-content: flex-end;" hidden>
+                            <span class="nameText" style="flex-grow:1">NAME</span>
+                            <input class="displayName" hidden />
+                            <input class="roles" hidden />
+                            <i class="fa fa-envelope" data-toggle="tooltip" data-placement="top" title="Invite email will be sent" style="align-self:center; padding:0 15px"></i>
+                            <button class="remove text-danger" type="button">
+                                <i class="fa fa-user-times"></i>
+                            </button>
+                        </div>
                     </div>
                 }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="CreateGroupForm">Submit</button>
+                <button type="submit" class="btn cs_primary" form="CreateGroupForm">Submit</button>
             </div>
         </div>
     </div>
