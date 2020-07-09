@@ -31,4 +31,14 @@ namespace ScrumManager.Models
         [FirestoreProperty]
         public string[] Roles { get; set; }
     }
+
+    [FirestoreData]
+    public class Group_InviteData
+    {
+        [FirestoreProperty]
+        public string Email { get; set; }
+
+        [FirestoreProperty]
+        public string[] Roles { get; set; }
+    }
 }

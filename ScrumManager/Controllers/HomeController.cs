@@ -83,6 +83,9 @@ namespace ScrumManager.Controllers
         [HttpGet("[action]")]
         public IActionResult SignIn()
         {
+            if(User.Identity.IsAuthenticated)
+                return RedirectToAction("Index");
+
             return View();
         }
 

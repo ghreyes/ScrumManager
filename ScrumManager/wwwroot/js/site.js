@@ -163,7 +163,7 @@ $('.CreateGroupForm_AddButton').on('click', function (e) {
                 newRow.data('id', uid);
                 newRow.find('.nameText').text(data.displayName);
                 newRow.find('.roles').val(role).attr('name', 'Users[' + uid + '][Roles]');
-                newRow.find('.displayName').val(uid).attr('name', 'Users[' + data.displayName + '][DisplayName]');
+                newRow.find('.displayName').val(data.displayName).attr('name', 'Users[' + uid + '][DisplayName]');
                 newRow.find('.emailIcon').remove();
                 removeBtn.data('id', uid);
             }
@@ -171,7 +171,7 @@ $('.CreateGroupForm_AddButton').on('click', function (e) {
                 newRow.data('id', email);
                 newRow.find('.nameText').text(email);
                 newRow.find('.roles').val(role).attr('name', 'Invites[' + email + '][Roles]');
-                newRow.find('.displayName').val(email).attr('name', 'Invites[' + email + '][DisplayName]');
+                newRow.find('.displayName').val(email).attr('name', 'Invites[' + email + '][Email]');
                 newRow.find('.emailIcon').tooltip();
                 removeBtn.data('id', email);
             }
@@ -190,4 +190,12 @@ $('body').on('click', '.remove', function (e) {
     var id = $(this).data('id');
 
     $(datacontainer).children().filter(function () { return $(this).data('id') == id }).remove();
+});
+
+$('#CreateGroupForm').on('keydown', 'input.no-enter', function (e) {
+    if (e.key == 'Enter') {
+        e.preventDefault();
+        var btn = $(this).parent().find('.CreateGroupForm_AddButton');
+        btn.trigger('click');
+    }
 });
