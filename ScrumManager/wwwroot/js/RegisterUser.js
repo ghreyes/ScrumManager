@@ -24,14 +24,13 @@
                     'Email': email
                 },
                 success: function (user) {
-
+                    window.location.href = "/Home";
                 },
                 error: function (error) {
                     toastr.error(error.message);
                 }
             });
 
-            window.location.href = "/Home";
         }).catch(function (error) {
             toastr.error(error.message);
         });
