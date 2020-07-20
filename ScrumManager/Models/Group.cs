@@ -13,6 +13,7 @@ namespace ScrumManager.Models
         {
             Data = new GroupData();
             Users = new Dictionary<string, Group_UserData>();
+            Invites = new Dictionary<string, Group_InviteData>();
         }
 
         [FirestoreDocumentId]
@@ -31,6 +32,10 @@ namespace ScrumManager.Models
         public Dictionary<string, Group_UserData> Managers => Users.Where(x => x.Value.Roles.Contains("Manager")).ToDictionary(x => x.Key, x => x.Value);
         public Dictionary<string, Group_UserData> Writers => Users.Where(x => x.Value.Roles.Contains("Writer")).ToDictionary(x => x.Key, x => x.Value);
         public Dictionary<string, Group_UserData> Viewers => Users.Where(x => x.Value.Roles.Contains("Viewer")).ToDictionary(x => x.Key, x => x.Value);
+
+        public Dictionary<string, Group_InviteData> InvitedManagers => Invites.Where(x => x.Value.Roles.Contains("Manager")).ToDictionary(x => x.Key, x => x.Value);
+        public Dictionary<string, Group_InviteData> InvitedWriters => Invites.Where(x => x.Value.Roles.Contains("Writer")).ToDictionary(x => x.Key, x => x.Value);
+        public Dictionary<string, Group_InviteData> InvitedViewers => Invites.Where(x => x.Value.Roles.Contains("Viewer")).ToDictionary(x => x.Key, x => x.Value);
     }
 
     [FirestoreData]

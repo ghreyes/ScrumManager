@@ -8,21 +8,16 @@ using System.Threading.Tasks;
 
 namespace ScrumManager.Models
 {
-    public class GroupVM
+    public class GroupVM : Group
     {
         public GroupVM(Group g)
         {
             DocId = g.DocId;
             Data = g.Data;
             Users = g.Users;
+            Invites = g.Invites;
             Logs = new Dictionary<string, Log>();
         }
-
-        public string DocId { get; set; }
-
-        public GroupData Data { get; set; }
-
-        public Dictionary<string, Group_UserData> Users { get; set; }
 
         public Dictionary<string, Log> Logs { get; set; }
 

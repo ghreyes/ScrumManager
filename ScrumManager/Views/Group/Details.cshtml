@@ -2,13 +2,23 @@
 
 @section Scripts{
     <script src="~/js/logListener.js"></script>
+    <script src="~/js/UserHelper.js"></script>
 }
 
 <div style="flex-direction:row; display:flex; justify-content:space-between">
     <span class="page-header">@Model.Data.Name</span>
-    <button class="btn cs_primary" data-toggle="modal" data-target="#" style="align-self:center">
-        Users
-    </button>
+    @if (Model.Users.First(x => x.Key == Model.UserID).Value.Roles.Contains("Manager"))
+    {
+        <button class="btn cs_primary" data-toggle="modal" data-target="#editGroupUsersModal" style="align-self:center">
+            Users
+        </button>
+    }
+    else
+    {
+        <button class="btn cs_primary" data-toggle="modal" data-target="#viewGroupUsersModal" style="align-self:center">
+            Users
+        </button>
+    }
 </div>
 
 <input hidden id="userID" value="@Model.UserID" />
@@ -46,7 +56,7 @@
         <span>You (Insert this user's name)</span>
     </div>
     <div class="col-md-9">
-        @using (Html.BeginForm("UpdateLog", "Log", FormMethod.Post, new { id = "UpdateLogForm"}))
+        @using (Html.BeginForm("UpdateLog", "Log", FormMethod.Post, new { id = "UpdateLogForm" }))
         {
             var thisUserLog = Model.Logs.FirstOrDefault(x => x.Value.UserID == "u1");
             @if (thisUserLog.Value != null)
@@ -133,3 +143,12 @@
         </div>
     }
 </div>
+
+@if (Model.Users.First(x => x.Key == Model.UserID).Value.Roles.Contains("Manager"))
+{
+    <partial name="/Views/Group/_EditGroupUsersModal.cshtml" model="@Model" />
+}
+else
+{
+    @*<partial name="/Views/Group/_EditGroupUsersModal.cshtml" model="@Model" />*@
+}

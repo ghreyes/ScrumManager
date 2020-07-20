@@ -1,0 +1,37 @@
+﻿@model Group
+
+<div class="modal fade" id="viewGroupUsersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Users for @Model.Data.Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach (var user in Model.Users)
+                {
+                <div style="flex-direction: row; display: flex; justify-content: flex-end;">
+                    <span style="flex-grow:1">@user.Value.DisplayName</span>
+                    @if (user.Value.Roles.Contains("Manager"))
+                    {
+                        <i class="fas fa-user-cog" data-toggle="tooltip" data-placement="top" title="Group Admin"></i>
+                    }
+                    @if (user.Value.Roles.Contains("Writer"))
+                    {
+                        <i class="fas fa-pencil-alt" data-toggle="tooltip" data-placement="top" title="Contributor"></i>
+                    }
+                    @if (user.Value.Roles.Contains("Viewer"))
+                    {
+                        <i class="fas fa-eye" data-toggle="tooltip" data-placement="top" title="View Only"></i>
+                    }
+                </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

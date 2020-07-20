@@ -47,6 +47,7 @@ namespace ScrumManager.Controllers
             {
                 var groupSnapshot = await db.Collection("groups").Document(group.ID).GetSnapshotAsync();
                 var groupData = groupSnapshot.ConvertTo<Group>();
+                if (groupData == null) continue;
                 group.TotalWriters = groupData.Writers.Count;
 
                 var logSnapshot = await db.Collection("logs")

@@ -163,5 +163,27 @@ namespace ScrumManager.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpPost("EditUsers")]
+        public async Task<IActionResult> EditUsers(Group group)
+        {
+            var f = Request.Form;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _groupService.EditUsers(group);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
     }
 }

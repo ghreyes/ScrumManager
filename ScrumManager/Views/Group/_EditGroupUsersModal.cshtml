@@ -1,0 +1,145 @@
+﻿@model Group
+
+<div class="modal fade" id="editGroupUsersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Users for @Model.Data.Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditUsers", "Group", FormMethod.Post, new { id = "EditUsersForm", @class = "post-ajax" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="manager-text" class="col-form-label">Managers:</label>
+                        <div style="display:flex">
+                            <input class="form-control col-md-10 no-enter" id="manager-text" />
+                            <button class="btn cs_primary col-md-2 GroupUser_AddBtn" type="button"
+                                    data-datacontainer="ManagersContainer" data-message="Manager already added" data-textfield="manager-text" data-role="Manager">
+                                Add
+                            </button>
+                        </div>
+                        <div id="ManagersContainer">
+                            @foreach (var manager in Model.Managers)
+                            {
+                                <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@manager.Key" data-existing="true">
+                                    <span style="flex-grow:1">@manager.Value.DisplayName</span>
+                                    <input hidden name="Users[@manager.Key][DisplayName]" value="@manager.Value.DisplayName" />
+                                    <input hidden name="Users[@manager.Key][Roles]" value="Manager" />
+                                    <button class="remove text-danger" type="button" data-datacontainer="ManagersContainer" data-id="@manager.Key">
+                                        <i class="fa fa-user-times"></i>
+                                    </button>
+                                </div>
+                            }
+                            @foreach (var manager in Model.InvitedManagers)
+                            {
+                                <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@manager.Key" data-existing="true">
+                                    <span style="flex-grow:1">@manager.Value.Email</span>
+                                    <input hidden name="Invites[@manager.Key][Email]" value="@manager.Value.Email" />
+                                    <input hidden name="Invites[@manager.Key][Roles]" value="Manager" />
+                                    <i class="emailIcon fa fa-envelope" data-toggle="tooltip" data-placement="top" title="Invite email has been sent" style="align-self:center; padding:0 15px"></i>
+                                    <button class="remove text-danger" type="button" data-datacontainer="ManagersContainer" data-id="@manager.Key">
+                                        <i class="fa fa-user-times"></i>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="writer-text" class="col-form-label">Writers:</label>
+                        <div style="display:flex">
+                            <input class="form-control col-md-10 no-enter" id="writer-text" />
+                            <button class="btn cs_primary col-md-2 GroupUser_AddBtn" type="button"
+                                    data-datacontainer="WritersContainer" data-message="Writer already added" data-textfield="writer-text" data-role="Writer">
+                                Add
+                            </button>
+                        </div>
+                        <div id="WritersContainer">
+                            @foreach (var writer in Model.Writers)
+                            {
+                                <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@writer.Key" data-existing="true">
+                                    <span style="flex-grow:1">@writer.Value.DisplayName</span>
+                                    <input hidden name="Users[@writer.Key][DisplayName]" value="@writer.Value.DisplayName" />
+                                    <input hidden name="Users[@writer.Key][Roles]" value="Manager" />
+                                    <button class="remove text-danger" type="button">
+                                        <i class="fa fa-user-times"></i>
+                                    </button>
+                                </div>
+                            }
+                            @foreach (var writer in Model.InvitedWriters)
+                            {
+                                <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@writer.Key" data-existing="true">
+                                    <span style="flex-grow:1">@writer.Value.Email</span>
+                                    <input hidden name="Invites[@writer.Key][Email]" value="@writer.Value.Email" />
+                                    <input hidden name="Invites[@writer.Key][Roles]" value="Manager" />
+                                    <i class="emailIcon fa fa-envelope" data-toggle="tooltip" data-placement="top" title="Invite email has been sent" style="align-self:center; padding:0 15px"></i>
+                                    <button class="remove text-danger" type="button" data-datacontainer="WritersContainer" data-id="@writer.Key">
+                                        <i class="fa fa-user-times"></i>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="viewer-text" class="col-form-label">Viewers:</label>
+                        <div style="display:flex">
+                            <input class="form-control col-md-10 no-enter" id="viewer-text" />
+                            <button class="btn cs_primary col-md-2 GroupUser_AddBtn" type="button"
+                                    data-datacontainer="ViewersContainer" data-message="Viewer already added" data-textfield="viewer-text" data-role="Viewer">
+                                Add
+                            </button>
+                        </div>
+                        <div id="ViewersContainer">
+                            @foreach (var viewer in Model.Viewers)
+                            {
+                                <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@viewer.Key" data-existing="true">
+                                    <span style="flex-grow:1">@viewer.Value.DisplayName</span>
+                                    <input hidden name="Users[@viewer.Key][DisplayName]" value="@viewer.Value.DisplayName" />
+                                    <input hidden name="Users[@viewer.Key][Roles]" value="Manager" />
+                                    <button class="remove text-danger" type="button">
+                                        <i class="fa fa-user-times"></i>
+                                    </button>
+                                </div>
+                            }
+                            @foreach (var viewer in Model.InvitedViewers)
+                            {
+                                <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@viewer.Key" data-existing="true">
+                                    <span style="flex-grow:1">@viewer.Value.Email</span>
+                                    <input hidden name="Invites[@viewer.Key][Email]" value="@viewer.Value.Email" />
+                                    <input hidden name="Invites[@viewer.Key][Roles]" value="Manager" />
+                                    <i class="emailIcon fa fa-envelope" data-toggle="tooltip" data-placement="top" title="Invite email has been sent" style="align-self:center; padding:0 15px"></i>
+                                    <button class="remove text-danger" type="button" data-datacontainer="ViewersContainer" data-id="@viewer.Key">
+                                        <i class="fa fa-user-times"></i>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    @*Template*@
+                    <div id="userTemplate" style="flex-direction: row; display: flex; justify-content: flex-end;" hidden>
+                        <span class="nameText" style="flex-grow:1">NAME</span>
+                        <input class="displayName" hidden />
+                        <input class="roles" hidden />
+                        <i class="emailIcon fa fa-envelope" data-toggle="tooltip" data-placement="top" title="Invite email will be sent" style="align-self:center; padding:0 15px"></i>
+                        <button class="remove text-danger" type="button">
+                            <i class="fa fa-user-times"></i>
+                        </button>
+                    </div> 
+                    
+                    <input hidden name="DocId" value="@Model.DocId" />
+                    <input hidden name="Data.Name" value="@Model.Data.Name" />
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn cs_primary" form="EditUsersForm">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
