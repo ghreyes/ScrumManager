@@ -1,5 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ScrumManager.Models
 {
@@ -13,6 +14,7 @@ namespace ScrumManager.Models
         public string DisplayName { get; set; }
 
         [FirestoreProperty]
+        [EmailAddress]
         public string Email { get; set; }
 
         [FirestoreProperty]
@@ -36,6 +38,7 @@ namespace ScrumManager.Models
     public class Group_InviteData
     {
         [FirestoreProperty]
+        [EmailAddress]
         public string Email { get; set; }
 
         [FirestoreProperty]

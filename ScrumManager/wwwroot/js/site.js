@@ -44,6 +44,24 @@ $('.post-ajax').on('submit', function (e) {
     });
 });
 
+$('.post-ajax-and-reload').on('submit', function (e) {
+    e.preventDefault();
+    if (!$(this).valid()) return;
+    $.ajax({
+        type: "POST",
+        url: e.currentTarget.action,
+        data: $(this).serialize(),
+        success: function () {
+            toastr.success('Success');
+            $('.modal').modal('hide');
+            location.reload();
+        },
+        error: function () {
+            toastr.warning("Something went wrong. Try again.");
+        }
+    });
+});
+
 $('#UpdateLogForm').on('submit', function (e) {
     e.preventDefault();
     if (!$(this).valid()) return;
@@ -117,3 +135,7 @@ function VerifyInputDiffs() {
 $('#SignOut').on('click', function (e) {
     firebase.auth().signOut();
 });
+
+function ValidateEmail(email) {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+}

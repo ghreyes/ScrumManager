@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("EditUsers", "Group", FormMethod.Post, new { id = "EditUsersForm", @class = "post-ajax" }))
+                @using (Html.BeginForm("EditUsers", "Group", FormMethod.Post, new { id = "EditUsersForm", @class = "post-ajax-and-reload" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
@@ -65,7 +65,7 @@
                                     <span style="flex-grow:1">@writer.Value.DisplayName</span>
                                     <input hidden name="Users[@writer.Key][DisplayName]" value="@writer.Value.DisplayName" />
                                     <input hidden name="Users[@writer.Key][Roles]" value="Manager" />
-                                    <button class="remove text-danger" type="button">
+                                    <button class="remove text-danger" type="button" data-datacontainer="WritersContainer" data-id="@writer.Key">
                                         <i class="fa fa-user-times"></i>
                                     </button>
                                 </div>
@@ -101,7 +101,7 @@
                                     <span style="flex-grow:1">@viewer.Value.DisplayName</span>
                                     <input hidden name="Users[@viewer.Key][DisplayName]" value="@viewer.Value.DisplayName" />
                                     <input hidden name="Users[@viewer.Key][Roles]" value="Manager" />
-                                    <button class="remove text-danger" type="button">
+                                    <button class="remove text-danger" type="button" data-datacontainer="ViewersContainer" data-id="@viewer.Key">
                                         <i class="fa fa-user-times"></i>
                                     </button>
                                 </div>

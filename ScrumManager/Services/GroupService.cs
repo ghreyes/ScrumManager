@@ -65,17 +65,15 @@ namespace ScrumManager.Services
                 }
             }
 
-            // Add group to new users
+            // Add group to new users 
+            // AND edit permissions for current users
             foreach (var user in group.Users)
             {
-                if (!currentGroup.Users.ContainsKey(user.Key))
+                var userDoc = db.Collection("users").Document(user.Key);
+                batch.Update(userDoc, new Dictionary<FieldPath, object>
                 {
-                    var userDoc = db.Collection("users").Document(user.Key);
-                    batch.Update(userDoc, new Dictionary<FieldPath, object>
-                    {
-                        { new FieldPath("Groups", group.DocId), new { currentGroup.Data.Name, user.Value.Roles } }
-                    });
-                }
+                    { new FieldPath("Groups", group.DocId), new { currentGroup.Data.Name, user.Value.Roles } }
+                });
             }
 
             // Send email to new invites

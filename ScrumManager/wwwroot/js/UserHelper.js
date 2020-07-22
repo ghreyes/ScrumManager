@@ -14,6 +14,12 @@
         return;
     }
 
+    // Input not email format
+    if (!ValidateEmail(email)) {
+        toastr.warning("Please enter a valid email");
+        return;
+    }
+
     // Need ajax call to check if email is tied to user
     // If so, Users[UID]
     // If not, Invites[Email]
