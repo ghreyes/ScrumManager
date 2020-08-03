@@ -38,24 +38,14 @@
     </button>
 </div>
 
-<div class="row">
-    <div class="col-md-3">
-        <br />
-        <h4>Users</h4>
-        @foreach (var u in Model.Users)
-        {
-            <span>@u.Value.DisplayName</span>
-        }
-    </div>
-</div>
 
-<h4>Logs</h4>
+@*<h4>Logs</h4>*@
 @* This user's log *@
 <div class="row">
-    <div class="col-md-3">
+    @*<div class="col-md-3">
         <span>You (Insert this user's name)</span>
-    </div>
-    <div class="col-md-9">
+    </div>*@
+    <div class="col-md-12">
         @using (Html.BeginForm("UpdateLog", "Log", FormMethod.Post, new { id = "UpdateLogForm" }))
         {
             var thisUserLog = Model.Logs.FirstOrDefault(x => x.Value.UserID == "u1");
@@ -114,21 +104,21 @@
         <span class="log-username">Name</span>
     </div>
     <div class="col-md-9 log-copy-content">
-        <span>Yesterday: </span>
+        <span style="font-weight: bolder">Yesterday: </span>
         <span class="log-yesterday">Yesterday</span>
         <br />
-        <span>Today: </span>
+        <span style="font-weight: bolder">Today: </span>
         <span class="log-today">Today</span>
         <br />
-        <span>Blockers: </span>
+        <span style="font-weight: bolder">Blockers: </span>
         <span class="log-blockers">Blockers</span>
     </div>
 </div>
-<span id="log-copy-row-empty" hidden>Not Submitted</span>
+<span id="log-copy-row-empty" style="font-style: italic;" hidden>Not Submitted</span>
 
 
 @* Other users' logs *@
-<div id="logs-container">
+<div id="logs-container" style="margin: 40px 0">
     @foreach (var log in Model.Logs)
     {
         if (log.Value.UserID != Model.UserID)
@@ -136,7 +126,7 @@
             <div class="log-container" data-UserID="@log.Value.UserID">
                 <div class="row">
                     <div class="col-md-3">
-                        <span>@log.Value.UserName</span>
+                        <span style="font-weight: bold; font-size: larger;">@log.Value.UserName</span>
                     </div>
                     <div class="col-md-9 log-content">
                         @if (log.Value.Yesterday.Length < 0 || log.Value.Today.Length < 0 || log.Value.Blockers.Length < 0)
