@@ -113,7 +113,7 @@
     <div class="col-md-3">
         <span class="log-username">Name</span>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 log-copy-content">
         <span>Yesterday: </span>
         <span class="log-yesterday">Yesterday</span>
         <br />
@@ -124,23 +124,38 @@
         <span class="log-blockers">Blockers</span>
     </div>
 </div>
+<span id="log-copy-row-empty" hidden>Not Submitted</span>
+
 
 @* Other users' logs *@
 <div id="logs-container">
     @foreach (var log in Model.Logs)
     {
-        <div class="row">
-            <div class="col-md-3">
-                <span>@log.Value.UserName</span>
+        if (log.Value.UserID != Model.UserID)
+        {
+            <div class="log-container" data-UserID="@log.Value.UserID">
+                <div class="row">
+                    <div class="col-md-3">
+                        <span>@log.Value.UserName</span>
+                    </div>
+                    <div class="col-md-9 log-content">
+                        @if (log.Value.Yesterday.Length < 0 || log.Value.Today.Length < 0 || log.Value.Blockers.Length < 0)
+                        {
+
+                            <span>Yesterday: @log.Value.Yesterday</span>
+                            <br />
+                            <span>Today: @log.Value.Today</span>
+                            <br />
+                            <span>Blockers: @log.Value.Blockers</span>
+                        }
+                        else
+                        {
+                            <span>Not Submitted</span>
+                        }
+                    </div>
+                </div>
             </div>
-            <div class="col-md-9">
-                <span>Yesterday: @log.Value.Yesterday</span>
-                <br />
-                <span>Today: @log.Value.Today</span>
-                <br />
-                <span>Blockers: @log.Value.Blockers</span>
-            </div>
-        </div>
+        }
     }
 </div>
 

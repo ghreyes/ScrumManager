@@ -64,6 +64,10 @@ namespace ScrumManager.Controllers
                     var log = logDoc.ConvertTo<Log>();
                     groupVM.Logs.Add(log.DocId, log);
                 }
+                else
+                {
+                    groupVM.Logs.Add(u.Value.DisplayName, new Log() { UserName = u.Value.DisplayName, UserID = u.Key });
+                }
             }
 
             var query = db.Collection("logs")
@@ -72,27 +76,31 @@ namespace ScrumManager.Controllers
                     .WhereLessThan("Date", DateTime.Now.AddDays(1).ToUniversalTime().Date);
 
             var hubChannel = id + "_" + DateTime.Now.ToString("yyyyMMdd");
+            var UserID = User.GetUserID();
+
+            groupVM.UserID = UserID;
 
             _listener = query.Listen(async snapshot =>
             {
                 foreach (DocumentChange change in snapshot.Changes)
                 {
+                    var log = change.Document.ConvertTo<Log>();
+                    if (log.UserID == UserID) continue;
+
                     if (change.ChangeType.ToString() == "Added")
                     {
-                        await _logHub.LogAdded(hubChannel, change.Document.ConvertTo<Log>());
+                        await _logHub.LogAdded(hubChannel, log);
                     }
                     else if (change.ChangeType.ToString() == "Modified")
                     {
-                        await _logHub.LogModified(hubChannel, change.Document.ConvertTo<Log>());
+                        await _logHub.LogModified(hubChannel, log);
                     }
                     else if (change.ChangeType.ToString() == "Removed")
                     {
-                        await _logHub.LogRemoved(hubChannel, change.Document.ConvertTo<Log>());
+                        await _logHub.LogRemoved(hubChannel, log);
                     }
                 }
             });
-
-            groupVM.UserID = User.GetUserID();
 
             return View(groupVM);
         }
@@ -113,22 +121,26 @@ namespace ScrumManager.Controllers
                    .WhereEqualTo("GroupID", groupID)
                    .WhereGreaterThanOrEqualTo("Date", date.Date)
                    .WhereLessThan("Date", date.AddDays(1).Date);
+                var UserID = User.GetUserID();
 
                 _listener = query.Listen(async snapshot =>
                 {
                     foreach (DocumentChange change in snapshot.Changes)
                     {
+                        var log = change.Document.ConvertTo<Log>();
+                        if (log.UserID == UserID) continue;
+
                         if (change.ChangeType == DocumentChange.Type.Added)
                         {
-                            await _logHub.LogAdded(groupToJoin, change.Document.ConvertTo<Log>());
+                            await _logHub.LogAdded(groupToJoin, log);
                         }
                         else if (change.ChangeType == DocumentChange.Type.Modified)
                         {
-                            await _logHub.LogModified(groupToJoin, change.Document.ConvertTo<Log>());
+                            await _logHub.LogModified(groupToJoin, log);
                         }
                         else if (change.ChangeType == DocumentChange.Type.Removed)
                         {
-                            await _logHub.LogRemoved(groupToJoin, change.Document.ConvertTo<Log>());
+                            await _logHub.LogRemoved(groupToJoin, log);
                         }
                     }
                 });

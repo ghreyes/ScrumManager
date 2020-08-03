@@ -40,7 +40,24 @@ function AddNewLog(log) {
     newRow.find('.log-yesterday').text(log.yesterday);
     newRow.find('.log-today').text(log.today);
     newRow.find('.log-blockers').text(log.blockers);
-    newRow.appendTo('#logs-container').removeAttr('hidden');
+
+    if ($('.log-container[data-UserID="' + log.userID + '"]').length == 0) {
+        // New User Log
+        newRow.removeAttr('hidden');
+        newRow.html('<div class="log-container" data-UserID="' + log.userID + '">' + newRow.html() + '</div>');
+        newRow.find('.log-copy-content').removeClass('log-copy-content').addClass('log-content');
+        newRow.appendTo('#logs-container');
+    }
+    else {
+        // Existing User Log
+        //newRow.appendTo('.log-container[data-UserID="' + log.userID + '"]').removeAttr('hidden');
+        var container = $('.log-container[data-UserID="' + log.userID + '"]');
+        var currContent = container.find('.log-content');
+        var newContent = newRow.find('.log-copy-content').removeClass('log-copy-content').addClass('log-content');
+        console.log(currContent.html());
+        console.log(newContent.html());
+        currContent.html(newContent.html());
+    }
 }
 
 function FormatDate(date) {
@@ -61,7 +78,8 @@ function ChangeListener(date) {
 
     var userID = $('#userID').val();
 
-    $('#logs-container').empty();
+    //$('#logs-container').empty();
+    $('.log-content').empty();
     $('#variableFormDetails').empty();
      if ($('input[name="FormDate"]').length == 0)
         $('#variableFormDetails').append('<input hidden name="FormDate" />')
@@ -73,6 +91,7 @@ function ChangeListener(date) {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         url: "/Group/ChangeListener/" + currGroup,
+        cache: false,
         success: function (data) {
             $('#yesterdayTA').val('').data('revert', '');
             $('#todayTA').val('').data('revert', '');
@@ -94,10 +113,15 @@ function ChangeListener(date) {
                     $('#variableFormDetails').append('<input hidden name="UserName" value="' + log.userName + '" />')
                     $('#variableFormDetails').append('<input hidden name="UserID" value="' + log.userID + '" />')
                 }
-            }); 
+            });
         },
         error: function () {
             console.log("error changing listener");
+        },
+        complete: function () {
+            var emptyRow = $('#log-copy-row-empty');
+            //console.log($('.log-container:empty'));
+            $('.log-content:empty').append(emptyRow.clone().removeAttr('hidden'));
         }
     });
 

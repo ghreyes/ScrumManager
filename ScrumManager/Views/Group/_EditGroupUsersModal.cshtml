@@ -64,7 +64,7 @@
                                 <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@writer.Key" data-existing="true">
                                     <span style="flex-grow:1">@writer.Value.DisplayName</span>
                                     <input hidden name="Users[@writer.Key][DisplayName]" value="@writer.Value.DisplayName" />
-                                    <input hidden name="Users[@writer.Key][Roles]" value="Manager" />
+                                    <input hidden name="Users[@writer.Key][Roles]" value="Writer" />
                                     <button class="remove text-danger" type="button" data-datacontainer="WritersContainer" data-id="@writer.Key">
                                         <i class="fa fa-user-times"></i>
                                     </button>
@@ -75,7 +75,7 @@
                                 <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@writer.Key" data-existing="true">
                                     <span style="flex-grow:1">@writer.Value.Email</span>
                                     <input hidden name="Invites[@writer.Key][Email]" value="@writer.Value.Email" />
-                                    <input hidden name="Invites[@writer.Key][Roles]" value="Manager" />
+                                    <input hidden name="Invites[@writer.Key][Roles]" value="Writer" />
                                     <i class="emailIcon fa fa-envelope" data-toggle="tooltip" data-placement="top" title="Invite email has been sent" style="align-self:center; padding:0 15px"></i>
                                     <button class="remove text-danger" type="button" data-datacontainer="WritersContainer" data-id="@writer.Key">
                                         <i class="fa fa-user-times"></i>
@@ -100,7 +100,7 @@
                                 <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@viewer.Key" data-existing="true">
                                     <span style="flex-grow:1">@viewer.Value.DisplayName</span>
                                     <input hidden name="Users[@viewer.Key][DisplayName]" value="@viewer.Value.DisplayName" />
-                                    <input hidden name="Users[@viewer.Key][Roles]" value="Manager" />
+                                    <input hidden name="Users[@viewer.Key][Roles]" value="Viewer" />
                                     <button class="remove text-danger" type="button" data-datacontainer="ViewersContainer" data-id="@viewer.Key">
                                         <i class="fa fa-user-times"></i>
                                     </button>
@@ -111,7 +111,7 @@
                                 <div style="flex-direction: row; display: flex; justify-content: flex-end;" data-id="@viewer.Key" data-existing="true">
                                     <span style="flex-grow:1">@viewer.Value.Email</span>
                                     <input hidden name="Invites[@viewer.Key][Email]" value="@viewer.Value.Email" />
-                                    <input hidden name="Invites[@viewer.Key][Roles]" value="Manager" />
+                                    <input hidden name="Invites[@viewer.Key][Roles]" value="Viewer" />
                                     <i class="emailIcon fa fa-envelope" data-toggle="tooltip" data-placement="top" title="Invite email has been sent" style="align-self:center; padding:0 15px"></i>
                                     <button class="remove text-danger" type="button" data-datacontainer="ViewersContainer" data-id="@viewer.Key">
                                         <i class="fa fa-user-times"></i>
