@@ -200,13 +200,13 @@ namespace ScrumManager.Controllers
             }
         }
 
-        [Route("DailyExport/{id}")]
+        [HttpPost("DailyExport")]
         [MiddlewareFilter(typeof(JsReportPipeline))]
-        public async Task<IActionResult> DailyExport(string id)
+        public async Task<IActionResult> DailyExport(DailyExportForm def)
         {
-            if (id == null) return View();
+            if (def.GroupId == null) return View();
 
-            if (!await _userService.IsUserInGroup(User.GetUserID(), id))
+            if (!await _userService.IsUserInGroup(User.GetUserID(), def.GroupId))
             {
                 ViewData["URL"] = Request.Host.ToString() + Request.Path;
                 return View("Unauthorized");
@@ -216,7 +216,7 @@ namespace ScrumManager.Controllers
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
 
             FirestoreDb db = FirestoreDb.Create("scrummanager");
-            var data = await db.Collection("groups").Document(id).GetSnapshotAsync();
+            var data = await db.Collection("groups").Document(def.GroupId).GetSnapshotAsync();
             var group = data.ConvertTo<Group>();
 
             var groupVM = new GroupVM(group);
@@ -226,8 +226,8 @@ namespace ScrumManager.Controllers
                 if (!u.Value.Roles.Contains("Writer")) continue;
                 var logData = await db.Collection("logs")
                     .WhereEqualTo("UserID", u.Key)
-                    .WhereGreaterThanOrEqualTo("Date", DateTime.Now.Date.ToUniversalTime().Date)
-                    .WhereLessThan("Date", DateTime.Now.Date.AddDays(1).ToUniversalTime().Date)
+                    .WhereGreaterThanOrEqualTo("Date", def.ExportDate.Date.ToUniversalTime().Date)
+                    .WhereLessThan("Date", def.ExportDate.Date.AddDays(1).ToUniversalTime().Date)
                     .GetSnapshotAsync();
                 var logDoc = logData.FirstOrDefault();
 
@@ -242,7 +242,7 @@ namespace ScrumManager.Controllers
                 }
             }
 
-            groupVM.ViewDate = DateTime.Today;
+            groupVM.ViewDate = def.ExportDate;
             
             //groupVM.UserID = User.GetUserID();       
             HttpContext.JsReportFeature().Recipe(jsreport.Types.Recipe.ChromePdf);

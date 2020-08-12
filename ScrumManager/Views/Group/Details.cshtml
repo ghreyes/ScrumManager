@@ -19,9 +19,12 @@
             Users
         </button>
     }
-    <a class="btn cs_primary" href='/Group/DailyExport/@Model.DocId' target="_blank" style="align-self:center">
+    @*<a class="btn cs_primary" href='/Group/DailyExport/@Model.DocId' target="_blank" style="align-self:center">
         Daily Export
-    </a>
+    </a>*@
+    <button class="btn cs_primary" data-toggle="modal" data-target="#dailyExportFormModal" style="align-self:center">
+        Daily Export
+    </button>
 </div>
 
 <input hidden id="userID" value="@Model.UserID" />
@@ -46,8 +49,8 @@
 @* This user's log *@
 <div class="row">
     @*<div class="col-md-3">
-        <span>You (Insert this user's name)</span>
-    </div>*@
+            <span>You (Insert this user's name)</span>
+        </div>*@
     <div class="col-md-12">
         @using (Html.BeginForm("UpdateLog", "Log", FormMethod.Post, new { id = "UpdateLogForm" }))
         {
@@ -160,3 +163,5 @@ else
 {
     @*<partial name="/Views/Group/_EditGroupUsersModal.cshtml" model="@Model" />*@
 }
+
+<partial name="/Views/Group/_DailyExportFormModal.cshtml" model="@new DailyExportForm { GroupId = Model.DocId, ExportDate = DateTime.Today }" />

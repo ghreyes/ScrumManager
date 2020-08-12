@@ -139,3 +139,7 @@ $('#SignOut').on('click', function (e) {
 function ValidateEmail(email) {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
 }
+
+$('#DailyExportForm').on('submit', function () {
+    $('.modal').modal('hide');
+});
