@@ -1,10 +1,5 @@
-﻿using Google.Cloud.Firestore;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
 
 namespace ScrumManager.Models
 {
@@ -22,5 +17,6 @@ namespace ScrumManager.Models
         public Dictionary<string, Log> Logs { get; set; }
 
         public string UserID { get; set; }
+        public DateTime ViewDate { get; set; }
     }
 }

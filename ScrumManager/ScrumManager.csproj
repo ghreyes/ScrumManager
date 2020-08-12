@@ -26,6 +26,9 @@
     <PackageReference Include="bootstrap.sass" Version="4.0.0" />
     <PackageReference Include="FirebaseAdmin" Version="1.12.0" />
     <PackageReference Include="jQuery" Version="3.5.1" />
+    <PackageReference Include="jsreport.AspNetCore" Version="2.0.1" />
+    <PackageReference Include="jsreport.Binary" Version="2.9.0" />
+    <PackageReference Include="jsreport.Local" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
@@ -41,6 +44,9 @@
   <ItemGroup>
     <Content Update="Properties\launchSettings.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Group\DailyExport.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Group\Details.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
@@ -64,6 +70,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_CookieConsentPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_PDFLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_Layout.cshtml">

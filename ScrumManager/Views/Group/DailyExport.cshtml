@@ -1,0 +1,40 @@
+﻿@model GroupVM
+
+@{ 
+    Layout = "_PDFLayout";
+}
+
+<div style="margin: .5in">
+    <div class="pdf_header">
+        <span class="pdf_title">@Model.Data.Name</span>
+        <span class="pdf_date">@Model.ViewDate.ToString("MM/dd/yyyy")</span>
+    </div>
+    
+    <hr />
+
+    <div style="margin: 20px 0">
+        @foreach (var log in Model.Logs)
+        {
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-3">
+                    <span class="pdf_name">@log.Value.UserName</span>
+                </div>
+                <div class="col-md-9 pdf_data_container">
+                    @if (log.Value.Yesterday.Length > 0 || log.Value.Today.Length > 0 || log.Value.Blockers.Length > 0)
+                    {
+
+                        <span class="pdf_data hanging_indent"><b>Yesterday:</b> @log.Value.Yesterday</span>
+                        <br />
+                        <span class="pdf_data hanging_indent"><b>Today:</b>  @log.Value.Today</span>
+                        <br />
+                        <span class="pdf_data hanging_indent"><b>Blockers:</b>  @log.Value.Blockers</span>
+                    }
+                    else
+                    {
+                        <span class="pdf_data hanging_indent">Not Submitted</span>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

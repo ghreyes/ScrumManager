@@ -147,3 +147,40 @@ textarea.form-control{
 [data-existing="true"]{
     font-weight: bold;
 }
+
+/* PDF export styles */
+.pdf_header {
+    flex-direction:row; 
+    display:flex; 
+    justify-content:space-between;
+}
+
+.pdf_title {
+    font-size: 36pt;
+    font-weight: bold;
+}
+
+.pdf_date {
+    font-size: 24pt;
+    font-weight: bold;
+    align-self: flex-end;
+}
+
+.pdf_name {
+    font-weight: bold;
+    font-size: 24pt;
+}
+
+.hanging_indent {
+    padding-left: 3em;
+    text-indent: -3em;
+    display: inline-block;
+}
+
+.pdf_data {
+    font-size: 24pt;
+}
+
+.pdf_data_container {
+    border-left: 2px solid rgba(0,0,0,.1);
+}

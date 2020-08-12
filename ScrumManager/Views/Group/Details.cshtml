@@ -19,6 +19,9 @@
             Users
         </button>
     }
+    <a class="btn cs_primary" href='/Group/DailyExport/@Model.DocId' target="_blank" style="align-self:center">
+        Daily Export
+    </a>
 </div>
 
 <input hidden id="userID" value="@Model.UserID" />
@@ -129,7 +132,7 @@
                         <span style="font-weight: bold; font-size: larger;">@log.Value.UserName</span>
                     </div>
                     <div class="col-md-9 log-content">
-                        @if (log.Value.Yesterday.Length < 0 || log.Value.Today.Length < 0 || log.Value.Blockers.Length < 0)
+                        @if (log.Value.Yesterday.Length > 0 || log.Value.Today.Length > 0 || log.Value.Blockers.Length > 0)
                         {
 
                             <span>Yesterday: @log.Value.Yesterday</span>

@@ -5,11 +5,14 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
+using Google.Type;
+using jsreport.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using ScrumManager.Hubs;
 using ScrumManager.Models;
 using ScrumManager.Services;
+using DateTime = System.DateTime;
 
 namespace ScrumManager.Controllers
 {
@@ -197,5 +200,53 @@ namespace ScrumManager.Controllers
             }
         }
 
+        [Route("DailyExport/{id}")]
+        [MiddlewareFilter(typeof(JsReportPipeline))]
+        public async Task<IActionResult> DailyExport(string id)
+        {
+            if (id == null) return View();
+
+            if (!await _userService.IsUserInGroup(User.GetUserID(), id))
+            {
+                ViewData["URL"] = Request.Host.ToString() + Request.Path;
+                return View("Unauthorized");
+            }
+
+            string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
+
+            FirestoreDb db = FirestoreDb.Create("scrummanager");
+            var data = await db.Collection("groups").Document(id).GetSnapshotAsync();
+            var group = data.ConvertTo<Group>();
+
+            var groupVM = new GroupVM(group);
+
+            foreach (var u in groupVM.Users)
+            {
+                if (!u.Value.Roles.Contains("Writer")) continue;
+                var logData = await db.Collection("logs")
+                    .WhereEqualTo("UserID", u.Key)
+                    .WhereGreaterThanOrEqualTo("Date", DateTime.Now.Date.ToUniversalTime().Date)
+                    .WhereLessThan("Date", DateTime.Now.Date.AddDays(1).ToUniversalTime().Date)
+                    .GetSnapshotAsync();
+                var logDoc = logData.FirstOrDefault();
+
+                if (logDoc != null)
+                {
+                    var log = logDoc.ConvertTo<Log>();
+                    groupVM.Logs.Add(log.DocId, log);
+                }
+                else
+                {
+                    groupVM.Logs.Add(u.Value.DisplayName, new Log() { UserName = u.Value.DisplayName, UserID = u.Key });
+                }
+            }
+
+            groupVM.ViewDate = DateTime.Today;
+            
+            //groupVM.UserID = User.GetUserID();       
+            HttpContext.JsReportFeature().Recipe(jsreport.Types.Recipe.ChromePdf);
+            return View(groupVM);
+        }
     }
 }
