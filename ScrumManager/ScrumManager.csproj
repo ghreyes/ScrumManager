@@ -45,6 +45,9 @@
     <Content Update="Properties\launchSettings.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
+    <Content Update="Views\Group\CustomExport.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Group\DailyExport.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

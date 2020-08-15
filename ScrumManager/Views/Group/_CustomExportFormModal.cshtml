@@ -1,0 +1,60 @@
+﻿@model CustomExportForm
+
+<div class="modal fade" id="customExportFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Custom Export</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("CustomExport", "Group", FormMethod.Post, new { id = "CustomExportForm", target = "_blank" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label asp-for="ExportStartDate" class="col-form-label">Start Date:</label>
+                        <input asp-for="ExportStartDate" asp-format="{0:yyyy-MM-dd}" class="form-control hasDatepicker" type="date">
+                        <span asp-validation-for="ExportStartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ExportEndDate" class="col-form-label">End Date:</label>
+                        <input asp-for="ExportEndDate" asp-format="{0:yyyy-MM-dd}" class="form-control hasDatepicker" type="date">
+                        <span asp-validation-for="ExportEndDate" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" asp-for="GroupingType" value="Date" checked>
+                                    Group by date
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" asp-for="GroupingType" value="User">
+                                    Group by user
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="checkbox">
+                                <label asp-for="ExportEndDate" class="col-form-label">
+                                    <input asp-for="ShowWeekends" type="checkbox">
+                                    Show Weekends?
+                                </label>
+                                <span asp-validation-for="ShowWeekends" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden name="GroupId" value="@Model.GroupId" />
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn cs_primary" form="CustomExportForm">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

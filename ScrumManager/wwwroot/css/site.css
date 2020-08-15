@@ -166,6 +166,15 @@ textarea.form-control{
     align-self: flex-end;
 }
 
+.pdf_group_header {
+    font-weight: bold;
+    font-size: 24pt;
+    text-decoration: underline;
+}
+    .pdf_group_header:not(:first-child) {
+        margin-top: 50px;
+    }
+
 .pdf_name {
     font-weight: bold;
     font-size: 24pt;

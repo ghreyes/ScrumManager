@@ -248,5 +248,54 @@ namespace ScrumManager.Controllers
             HttpContext.JsReportFeature().Recipe(jsreport.Types.Recipe.ChromePdf);
             return View(groupVM);
         }
+
+        [HttpPost("CustomExport")]
+        //[MiddlewareFilter(typeof(JsReportPipeline))]
+        public async Task<IActionResult> CustomExport(CustomExportForm def)
+        {
+            if (def.GroupId == null) return View();
+
+            if (!await _userService.IsUserInGroup(User.GetUserID(), def.GroupId))
+            {
+                ViewData["URL"] = Request.Host.ToString() + Request.Path;
+                return View("Unauthorized");
+            }
+
+            string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
+
+            FirestoreDb db = FirestoreDb.Create("scrummanager");
+            var data = await db.Collection("groups").Document(def.GroupId).GetSnapshotAsync();
+            var group = data.ConvertTo<Group>();
+
+            var exportVM = new CustomExportVM(group, def);
+
+            foreach (var u in exportVM.Users)
+            {
+                if (!u.Value.Roles.Contains("Writer")) continue;
+                var logData = await db.Collection("logs")
+                    .WhereEqualTo("UserID", u.Key)
+                    .WhereGreaterThanOrEqualTo("Date", def.ExportStartDate.Date.ToUniversalTime().Date)
+                    .WhereLessThan("Date", def.ExportEndDate.Date.AddDays(1).ToUniversalTime().Date)
+                    .GetSnapshotAsync();
+                var logs = logData.Select(x => x.ConvertTo<Log>());
+
+                foreach( var day in def.ExportStartDate.EachDay(def.ExportEndDate))
+                {
+                    var logDoc = logs.FirstOrDefault(x => x.Date.ToDateTime() == day);
+                    if (logDoc != null)
+                    {
+                        exportVM.Logs.Add(logDoc);
+                    }
+                    else
+                    {
+                        exportVM.Logs.Add(new Log() { UserName = u.Value.DisplayName, UserID=u.Key, Date = Timestamp.FromDateTime(DateTime.SpecifyKind(day, DateTimeKind.Utc)) });
+                    }
+                } 
+            }
+
+            //HttpContext.JsReportFeature().Recipe(jsreport.Types.Recipe.ChromePdf);
+            return View(exportVM);
+        }
     }
 }

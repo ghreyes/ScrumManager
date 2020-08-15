@@ -1,0 +1,77 @@
+﻿@model CustomExportVM
+
+@{ 
+    Layout = "_PDFLayout";
+}
+
+<div style="margin: .5in">
+    <div class="pdf_header">
+        <span class="pdf_title">@Model.GroupData.Name</span>
+        <span class="pdf_date">@Model.FormData.ExportStartDate.ToString("MM/dd/yyyy") - @Model.FormData.ExportEndDate.ToString("MM/dd/yyyy")</span>
+    </div>
+    
+    <hr />
+
+    <div style="margin: 20px 0">
+        @if (Model.FormData.GroupingType == ExportGroupType.Date)
+        {
+            @foreach (var date in Model.FormData.ExportStartDate.EachDay(Model.FormData.ExportEndDate))
+            {
+                <div class="pdf_group_header">@date.ToString("MM/dd/yyyy")</div>
+                @foreach (var log in Model.Logs.Where(x => x.Date.ToDateTime() == date).OrderBy(x => x.UserName))
+                {
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-3">
+                            <span class="pdf_name">@log.UserName</span>
+                        </div>
+                        <div class="col-md-9 pdf_data_container">
+                            @if (log.Yesterday.Length > 0 || log.Today.Length > 0 || log.Blockers.Length > 0)
+                            {
+
+                                <span class="pdf_data hanging_indent"><b>Yesterday:</b> @log.Yesterday</span>
+                                <br />
+                                <span class="pdf_data hanging_indent"><b>Today:</b>  @log.Today</span>
+                                <br />
+                                <span class="pdf_data hanging_indent"><b>Blockers:</b>  @log.Blockers</span>
+                            }
+                            else
+                            {
+                                <span class="pdf_data hanging_indent">Not Submitted</span>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        }
+        else if (Model.FormData.GroupingType == ExportGroupType.User)
+        {
+            @foreach (var user in Model.Users.Where(x => x.Value.Roles.Contains("Writer")))
+            {
+                <div class="pdf_group_header">@user.Value.DisplayName</div>
+                @foreach (var log in Model.Logs.Where(x => x.UserID == user.Key).OrderBy(x => x.Date))
+                {
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-3">
+                            <span class="pdf_name">@log.Date.ToDateTime().ToString("MM/dd/yyyy")</span>
+                        </div>
+                        <div class="col-md-9 pdf_data_container">
+                            @if (log.Yesterday.Length > 0 || log.Today.Length > 0 || log.Blockers.Length > 0)
+                            {
+
+                                <span class="pdf_data hanging_indent"><b>Yesterday:</b> @log.Yesterday</span>
+                                <br />
+                                <span class="pdf_data hanging_indent"><b>Today:</b>  @log.Today</span>
+                                <br />
+                                <span class="pdf_data hanging_indent"><b>Blockers:</b>  @log.Blockers</span>
+                            }
+                            else
+                            {
+                                <span class="pdf_data hanging_indent">Not Submitted</span>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
