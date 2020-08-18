@@ -7,27 +7,26 @@
 
 <div style="flex-direction:row; display:flex; justify-content:space-between">
     <span class="page-header">@Model.Data.Name</span>
-    @if (Model.Users.First(x => x.Key == Model.UserID).Value.Roles.Contains("Manager"))
-    {
-        <button class="btn cs_primary" data-toggle="modal" data-target="#editGroupUsersModal" style="align-self:center">
-            Users
+    <div style="align-self:center">
+        @if (Model.Users.First(x => x.Key == Model.UserID).Value.Roles.Contains("Manager"))
+        {
+            <button class="btn cs_primary" data-toggle="modal" data-target="#editGroupUsersModal" >
+                Users
+            </button>
+        }
+        else
+        {
+            <button class="btn cs_primary" data-toggle="modal" data-target="#viewGroupUsersModal">
+                Users
+            </button>
+        }
+        <button class="btn cs_primary" data-toggle="modal" data-target="#dailyExportFormModal">
+            Day Export
         </button>
-    }
-    else
-    {
-        <button class="btn cs_primary" data-toggle="modal" data-target="#viewGroupUsersModal" style="align-self:center">
-            Users
+        <button class="btn cs_primary" data-toggle="modal" data-target="#customExportFormModal">
+            Custom Export
         </button>
-    }
-    @*<a class="btn cs_primary" href='/Group/DailyExport/@Model.DocId' target="_blank" style="align-self:center">
-            Daily Export
-        </a>*@
-    <button class="btn cs_primary" data-toggle="modal" data-target="#dailyExportFormModal" style="align-self:center">
-        Daily Export
-    </button>
-    <button class="btn cs_primary" data-toggle="modal" data-target="#customExportFormModal" style="align-self:center">
-        Custom Export
-    </button>
+    </div>
 </div>
 
 <input hidden id="userID" value="@Model.UserID" />
