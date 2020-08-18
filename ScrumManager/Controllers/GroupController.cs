@@ -250,7 +250,7 @@ namespace ScrumManager.Controllers
         }
 
         [HttpPost("CustomExport")]
-        //[MiddlewareFilter(typeof(JsReportPipeline))]
+        [MiddlewareFilter(typeof(JsReportPipeline))]
         public async Task<IActionResult> CustomExport(CustomExportForm def)
         {
             if (def.GroupId == null) return View();
@@ -282,6 +282,9 @@ namespace ScrumManager.Controllers
 
                 foreach( var day in def.ExportStartDate.EachDay(def.ExportEndDate))
                 {
+                    if (!def.ShowWeekends && (day.DayOfWeek == System.DayOfWeek.Saturday || day.DayOfWeek == System.DayOfWeek.Sunday))
+                        continue;
+
                     var logDoc = logs.FirstOrDefault(x => x.Date.ToDateTime() == day);
                     if (logDoc != null)
                     {
@@ -294,7 +297,7 @@ namespace ScrumManager.Controllers
                 } 
             }
 
-            //HttpContext.JsReportFeature().Recipe(jsreport.Types.Recipe.ChromePdf);
+            HttpContext.JsReportFeature().Recipe(jsreport.Types.Recipe.ChromePdf);
             return View(exportVM);
         }
     }

@@ -17,6 +17,8 @@
         {
             @foreach (var date in Model.FormData.ExportStartDate.EachDay(Model.FormData.ExportEndDate))
             {
+                if (!Model.FormData.ShowWeekends && (date.DayOfWeek == System.DayOfWeek.Saturday || date.DayOfWeek == System.DayOfWeek.Sunday))
+                { continue; }
                 <div class="pdf_group_header">@date.ToString("MM/dd/yyyy")</div>
                 @foreach (var log in Model.Logs.Where(x => x.Date.ToDateTime() == date).OrderBy(x => x.UserName))
                 {
