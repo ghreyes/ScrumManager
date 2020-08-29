@@ -30,6 +30,7 @@ namespace ScrumManager.Controllers
         }
 
         [Authorize]
+        [HttpGet("")]
         [HttpGet("Home")]
         public async Task<IActionResult> Index()
         {

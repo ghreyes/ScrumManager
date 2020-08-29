@@ -15,39 +15,41 @@
 <body class="cs_tertiary">
     <header>
         <nav class="navbar navbar-expand-md fixed-top cs_primary">
-            <a class="navbar-brand" href="#">Scrum Manager</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="container">
+                <a class="navbar-brand" href="/Home">Scrum Manager</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            @if (User.Identity.IsAuthenticated)
-            {
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home">Groups</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Reports">Reports</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Help</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-item nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.GetUserName()</a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a id="SignOut" class="dropdown-item" href="/SignOut">Sign Out</a>
-                        </div>
-                    </li>
-                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav mr-auto">
+                        @*<li class="nav-item">
+                            <a class="nav-link" href="/Home">Groups</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Reports">Reports</a>
+                        </li>*@
+                    </ul>
+                    <ul class="navbar-nav">
+                        @*<li class="nav-item">
+                            <a class="nav-link" href="#">Help</a>
+                        </li>*@
+                        <li class="nav-item dropdown">
+                            <a class="nav-item nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.GetUserName()</a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a id="SignOut" class="dropdown-item" href="/SignOut">Sign Out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                }
             </div>
-            }
         </nav>
     </header>
 
-    <partial name="_CookieConsentPartial" />
+    @*<partial name="_CookieConsentPartial" />*@
 
     <main class="container body-content" style="padding-top:60px;">
         @RenderBody()
