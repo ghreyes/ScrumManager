@@ -1,22 +1,17 @@
-﻿using Google.Cloud.Firestore;
-using RestSharp;
+﻿using RestSharp;
 using RestSharp.Authenticators;
-using ScrumManager.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ScrumManager.Services
 {
-	public class EmailService
+    public class EmailService
 	{
 		public static IRestResponse SendEmail(string to, string subject, string body)
 		{
 			RestClient client = new RestClient();
 			client.BaseUrl = new Uri("https://api.mailgun.net/v3");
-			client.Authenticator =
-			new HttpBasicAuthenticator("api", Secrets.MailGunAPIKey);
+			//client.Authenticator = new HttpBasicAuthenticator("api", Secrets.MailGunAPIKey);
+			client.Authenticator = new HttpBasicAuthenticator("api", Environment.GetEnvironmentVariable("MailGunAPIKey"));
 			RestRequest request = new RestRequest();
 			request.AddParameter("domain", "sandbox229f682cee2c4780a73253fd83eaf4a4.mailgun.org", ParameterType.UrlSegment);
 			request.Resource = "{domain}/messages";

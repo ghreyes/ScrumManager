@@ -3,22 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>ca75f1e6-8485-460c-88f9-dbe05da66641</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Remove="Controllers\HomeController.cs" />
     <Content Remove="Models\ErrorViewModel.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="app.yaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="app.yaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
