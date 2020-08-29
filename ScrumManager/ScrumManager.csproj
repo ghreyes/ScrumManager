@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.5.0" />
-    <PackageReference Include="bootstrap.sass" Version="4.0.0" />
+    <PackageReference Include="bootstrap.sass" Version="4.3.1" />
     <PackageReference Include="FirebaseAdmin" Version="1.12.0" />
     <PackageReference Include="jQuery" Version="3.5.1" />
     <PackageReference Include="jsreport.AspNetCore" Version="2.0.1" />
