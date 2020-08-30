@@ -10,8 +10,7 @@ namespace ScrumManager.Services
 		{
 			RestClient client = new RestClient();
 			client.BaseUrl = new Uri("https://api.mailgun.net/v3");
-			//client.Authenticator = new HttpBasicAuthenticator("api", Secrets.MailGunAPIKey);
-			client.Authenticator = new HttpBasicAuthenticator("api", Environment.GetEnvironmentVariable("MailGunAPIKey"));
+            client.Authenticator = new HttpBasicAuthenticator("api", Secrets.MailGunAPIKey);
 			RestRequest request = new RestRequest();
 			request.AddParameter("domain", "sandbox229f682cee2c4780a73253fd83eaf4a4.mailgun.org", ParameterType.UrlSegment);
 			request.Resource = "{domain}/messages";
