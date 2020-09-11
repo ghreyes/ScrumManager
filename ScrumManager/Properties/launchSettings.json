@@ -13,8 +13,7 @@
       "launchBrowser": true,
       "launchUrl": "/",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "GOOGLE_APPLICATION_CREDENTIALS": "ScrumManager-c7ce2bf2810c.json"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "ScrumManager": {
