@@ -31,7 +31,7 @@ namespace ScrumManager.Services
             {
                 foreach (var i in group.Invites)
                 {
-                    var body = "You have been added to " + group.Data.Name + ". Register at https://localhost:44347/Register to accept any pending invitations.";
+                    var body = "You have been added to " + group.Data.Name + ". Register at https://sm.ghreyes.com/Register to accept any pending invitations.";
                     var result = EmailService.SendEmail(i.Value.Email, "Group Invitation for " + group.Data.Name, body);
                     if (!result.IsSuccessful)
                         System.Diagnostics.Debug.WriteLine(result.ErrorMessage);
@@ -83,7 +83,7 @@ namespace ScrumManager.Services
                 {
                     if (!currentGroup.Invites.ContainsKey(inv.Key))
                     {
-                        var body = "You have been added to " + currentGroup.Data.Name + ". Register at https://localhost:44347/Register to accept any pending invitations.";
+                        var body = "You have been added to " + currentGroup.Data.Name + ". Register at https://sm.ghreyes.com/Register to accept any pending invitations.";
                         var result = EmailService.SendEmail(inv.Value.Email, "Group Invitation for " + currentGroup.Data.Name, body);
                         if (!result.IsSuccessful)
                             System.Diagnostics.Debug.WriteLine(result.ErrorMessage);

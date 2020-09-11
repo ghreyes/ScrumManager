@@ -131,8 +131,8 @@ namespace ScrumManager.Controllers
             {
                 if(FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance == null)
                 {
-                    string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
-                    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
+                    //string credential_path = @"C:\Users\ghrey\Downloads\ScrumManager-c7ce2bf2810c.json";
+                    //Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
                     var app = FirebaseApp.Create(new AppOptions() { Credential = GoogleCredential.GetApplicationDefault() });
                 }
 
