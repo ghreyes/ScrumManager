@@ -16,7 +16,7 @@
     "firebase-admin": "^8.10.0",
     "firebase-functions": "^3.11.0",
     "handlebars": "^4.7.6",
-    "html-pdf": "^2.2.0"
+    "html-pdf": "^3.0.1"
   },
   "devDependencies": {
     "eslint": "^5.12.0",
